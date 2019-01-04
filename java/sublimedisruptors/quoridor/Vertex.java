@@ -37,8 +37,8 @@ import com.google.auto.value.AutoValue;
  *                 a   b   c   d   e   f   g   h   i
  *                              Player 1
  *
- * <p>It is legal to construct a vertex instance with an out-of-bounds row or column (e.g.,
- * a column less than {@code a} or a row less than {@code 1}).
+ * <p>It is legal to construct a vertex instance with an out-of-bounds row or column (e.g., a column
+ * less than {@code a} or a row less than {@code 1}).
  */
 @AutoValue
 public abstract class Vertex {

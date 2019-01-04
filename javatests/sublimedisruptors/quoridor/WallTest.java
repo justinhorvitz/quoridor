@@ -5,7 +5,7 @@ import static com.google.common.truth.Truth.assertThat;
 import java.util.List;
 import org.junit.Test;
 
-/** Tests for {@link WallTest}. */
+/** Tests for {@link Wall}. */
 public final class WallTest {
 
   @Test
