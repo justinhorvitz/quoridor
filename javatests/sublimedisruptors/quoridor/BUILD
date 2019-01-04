@@ -15,3 +15,12 @@ java_test(
         "//java/sublimedisruptors/quoridor",
     ],
 )
+
+java_test(
+    name = "VertexTest",
+    srcs = glob(["VertexTest.java"]),
+    deps = [
+        "//deps:truth",
+        "//java/sublimedisruptors/quoridor",
+    ],
+)
