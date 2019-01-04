@@ -10,7 +10,7 @@ maven_jar(
 
 maven_jar(
     name = "guava",
-    artifact = "com.google.guava:guava:19.0",
+    artifact = "com.google.guava:guava:27.0.1-jre",
 )
 
 maven_jar(
