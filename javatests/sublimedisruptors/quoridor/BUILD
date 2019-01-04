@@ -6,3 +6,12 @@ java_test(
         "//java/sublimedisruptors/quoridor",
     ],
 )
+
+java_test(
+    name = "EdgeTest",
+    srcs = glob(["EdgeTest.java"]),
+    deps = [
+        "//deps:truth",
+        "//java/sublimedisruptors/quoridor",
+    ],
+)
