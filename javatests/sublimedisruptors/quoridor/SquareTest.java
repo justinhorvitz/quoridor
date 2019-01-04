@@ -38,4 +38,3 @@ public final class SquareTest {
     assertThat(edgeRight).isEqualTo(Edge.vertical(Vertex.at('c', 3)));
   }
 }
-

@@ -33,3 +33,12 @@ java_test(
         "//java/sublimedisruptors/quoridor",
     ],
 )
+
+java_test(
+    name = "WallTest",
+    srcs = ["WallTest.java"],
+    deps = [
+        "//deps:truth",
+        "//java/sublimedisruptors/quoridor",
+    ],
+)
