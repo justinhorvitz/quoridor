@@ -8,6 +8,9 @@ import java.util.function.UnaryOperator;
  *
  * <p>A direction acts as a {@link UnaryOperator} on a {@link Vertex} to provide the next vertex in
  * a given direction.
+ *
+ * <p>Each direction is intended to be interpreted from the perspective of the diagram in the
+ * Javadoc for {@link Vertex}, with player one at the bottom and player two at the top.
  */
 public enum Direction implements UnaryOperator<Vertex> {
   UP(col -> col, row -> row - 1),
