@@ -16,10 +16,7 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class Move {
 
-  /**
-   * Creates a move indicating that the pawn belonging to {@code player} is moving his or her pawn
-   * to {@code destination}.
-   */
+  /** Creates a move indicating that {@code player} is moving their pawn to {@code destination}. */
   public static Move pawnMove(Player player, Square destination) {
     return new AutoValue_Move(player, AutoOneOf_Move_PawnOrWall.pawn(destination));
   }
