@@ -4,8 +4,11 @@ import static com.google.common.truth.Truth.assertThat;
 
 import java.util.List;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 /** Tests for {@link Wall}. */
+@RunWith(JUnit4.class)
 public final class WallTest {
 
   @Test

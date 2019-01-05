@@ -1,6 +1,6 @@
 maven_jar(
     name = "auto_value",
-    artifact = "com.google.auto.value:auto-value:1.5.3",
+    artifact = "com.google.auto.value:auto-value:1.5.4",
 )
 
 maven_jar(

@@ -4,9 +4,18 @@ java_plugin(
     deps = ["@auto_value//jar"],
 )
 
+java_plugin(
+    name = "auto_one_of_plugin",
+    processor_class = "com.google.auto.value.processor.AutoOneOfProcessor",
+    deps = ["@auto_value//jar"],
+)
+
 java_library(
     name = "auto_value",
-    exported_plugins = [":auto_value_plugin"],
+    exported_plugins = [
+        ":auto_one_of_plugin",
+        ":auto_value_plugin",
+    ],
     neverlink = 1,
     exports = ["@auto_value//jar"],
     visibility = ["//visibility:public"],

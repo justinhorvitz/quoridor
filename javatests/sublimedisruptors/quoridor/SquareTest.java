@@ -1,6 +1,7 @@
 package sublimedisruptors.quoridor;
 
 import static com.google.common.truth.Truth.assertThat;
+import static sublimedisruptors.quoridor.testing.TestUtils.assertThrows;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,5 +37,11 @@ public final class SquareTest {
     Square square = Square.create(Vertex.at('c', 3));
     Edge edgeRight = square.borderingEdge(Direction.RIGHT);
     assertThat(edgeRight).isEqualTo(Edge.vertical(Vertex.at('c', 3)));
+  }
+
+  @Test
+  public void borderingEdge_null_throws() {
+    Square square = Square.create(Vertex.at('c', 3));
+    assertThrows(RuntimeException.class, () -> square.borderingEdge(null));
   }
 }
