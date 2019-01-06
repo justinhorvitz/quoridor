@@ -58,6 +58,9 @@ public abstract class QuoridorSettings {
   /** The size of each {@link Wall}, in terms of the number of {@linkplain Edge edges} it covers. */
   public abstract int wallSize();
 
+  /** Converts these settings to a {@link Builder} with the same settings. */
+  public abstract Builder toBuilder();
+
   @AutoValue.Builder
   public abstract static class Builder {
 

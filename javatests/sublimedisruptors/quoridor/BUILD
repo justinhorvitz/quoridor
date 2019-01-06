@@ -1,4 +1,13 @@
 java_test(
+    name = "BoardTest",
+    srcs = ["BoardTest.java"],
+    deps = [
+        "//deps:truth",
+        "//java/sublimedisruptors/quoridor",
+    ],
+)
+
+java_test(
     name = "DirectionTest",
     srcs = ["DirectionTest.java"],
     deps = [
