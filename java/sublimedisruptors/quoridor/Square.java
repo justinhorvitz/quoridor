@@ -5,8 +5,8 @@ import com.google.auto.value.AutoValue;
 /**
  * An individual square on the board.
  *
- * <p>A {@code Square} is {@linkplain #borderingEdge bordered} by an {@link Edge} in each
- * {@link Direction}.
+ * <p>A {@code Square} is bordered by an {@link Edge} and another {@code Square} in each {@link
+ * Direction}.
  */
 @AutoValue
 public abstract class Square {
@@ -32,6 +32,11 @@ public abstract class Square {
         return Edge.vertical(vertex());
     }
     throw new IllegalArgumentException("Unexpected direction: " + direction);
+  }
+
+  /** Returns the bordering {@link Square} in the given {@link Direction}. */
+  public final Square borderingSquare(Direction direction) {
+    return Square.create(direction.apply(vertex()));
   }
 
   private Vertex upLeftVertex() {
