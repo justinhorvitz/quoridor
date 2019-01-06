@@ -70,8 +70,7 @@ public abstract class QuoridorSettings {
     public abstract Builder setBoardSize(int boardSize);
 
     /**
-     * Sets the {@linkplain #players} participating in the game, in the order in which they will
-     * take turns.
+     * Sets the players participating in the game, in the order in which they will take turns.
      *
      * <p>Quoridor supports 2-4 players. The {@code players} parameter must not contain {@code
      * null}, nor duplicate players.
