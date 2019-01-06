@@ -55,22 +55,22 @@ public final class SquareTest {
   @Test
   public void borderingSquare_down() {
     Square square = Square.create(Vertex.at('c', 3));
-    Square squareAbove = square.borderingSquare(Direction.DOWN);
-    assertThat(squareAbove).isEqualTo(Square.create(Vertex.at('c', 4)));
+    Square squareBelow = square.borderingSquare(Direction.DOWN);
+    assertThat(squareBelow).isEqualTo(Square.create(Vertex.at('c', 4)));
   }
 
   @Test
   public void borderingSquare_left() {
     Square square = Square.create(Vertex.at('c', 3));
-    Square squareAbove = square.borderingSquare(Direction.LEFT);
-    assertThat(squareAbove).isEqualTo(Square.create(Vertex.at('b', 3)));
+    Square squareLeft = square.borderingSquare(Direction.LEFT);
+    assertThat(squareLeft).isEqualTo(Square.create(Vertex.at('b', 3)));
   }
 
   @Test
   public void borderingSquare_right() {
     Square square = Square.create(Vertex.at('c', 3));
-    Square squareAbove = square.borderingSquare(Direction.RIGHT);
-    assertThat(squareAbove).isEqualTo(Square.create(Vertex.at('d', 3)));
+    Square squareRight = square.borderingSquare(Direction.RIGHT);
+    assertThat(squareRight).isEqualTo(Square.create(Vertex.at('d', 3)));
   }
 
   @Test
