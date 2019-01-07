@@ -14,8 +14,8 @@ import java.util.Set;
  *
  * <p>The state of the board is fully observable through its {@link #size()} and its four getter
  * methods: {@link #getPawns}, {@link #getWallsAvailable}, {@link #getWalledOffEdges}, and {@link
- * #getWalledOffVertices}. These methods, however, all return <em>immutable</em> views of the board
- * - the board is only mutable via {@link #movePawn} and {@link #placeWall}.
+ * #getWalledOffVertices}. These methods, however, all return <em>immutable</em> snapshots of the
+ * board. The board is only mutable via {@link #movePawn} and {@link #placeWall}.
  *
  * <p>This class is oblivious to the "rules of the game". It accepts moves unconditionally,
  * performing no validity checks (including boundary checks). Accounting is performed to track how
