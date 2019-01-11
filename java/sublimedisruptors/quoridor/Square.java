@@ -21,11 +21,11 @@ public abstract class Square {
   public final Groove borderingGroove(Direction direction) {
     switch (direction) {
       case UP:
-        return Groove.horizontal(upLeftVertex());
+        return Groove.horizontal(Direction.UP.apply(vertex()));
       case DOWN:
         return Groove.horizontal(vertex());
       case LEFT:
-        return Groove.vertical(upLeftVertex());
+        return Groove.vertical(Direction.LEFT.apply(vertex()));
       case RIGHT:
         return Groove.vertical(vertex());
     }
@@ -35,9 +35,5 @@ public abstract class Square {
   /** Returns the bordering {@link Square} in the given {@link Direction}. */
   public final Square borderingSquare(Direction direction) {
     return Square.create(direction.apply(vertex()));
-  }
-
-  private Vertex upLeftVertex() {
-    return Direction.UP.andThen(Direction.LEFT).apply(vertex());
   }
 }

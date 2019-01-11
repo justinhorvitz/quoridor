@@ -15,7 +15,7 @@ public final class SquareTest {
   public void borderingGroove_up() {
     Square square = Square.create(Vertex.at('c', 3));
     Groove grooveAbove = square.borderingGroove(Direction.UP);
-    assertThat(grooveAbove).isEqualTo(Groove.horizontal(Vertex.at('b', 2)));
+    assertThat(grooveAbove).isEqualTo(Groove.horizontal(Vertex.at('c', 2)));
   }
 
   @Test
@@ -29,7 +29,7 @@ public final class SquareTest {
   public void borderingGroove_left() {
     Square square = Square.create(Vertex.at('c', 3));
     Groove grooveLeft = square.borderingGroove(Direction.LEFT);
-    assertThat(grooveLeft).isEqualTo(Groove.vertical(Vertex.at('b', 2)));
+    assertThat(grooveLeft).isEqualTo(Groove.vertical(Vertex.at('b', 3)));
   }
 
   @Test
