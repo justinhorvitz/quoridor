@@ -12,7 +12,7 @@ import org.junit.runners.JUnit4;
 public final class WallTest {
 
   @Test
-  public void coveredEdges_length2_vertical() {
+  public void coveredGrooves_length2_vertical() {
     Wall wall = new Wall(Groove.vertical(Vertex.at('c', 3)), /*length=*/ 2);
     List<Groove> coveredGrooves = wall.coveredGrooves();
     assertThat(coveredGrooves)
@@ -20,7 +20,7 @@ public final class WallTest {
   }
 
   @Test
-  public void coveredEdges_length2_horizontal() {
+  public void coveredGrooves_length2_horizontal() {
     Wall wall = new Wall(Groove.horizontal(Vertex.at('c', 3)), /*length=*/ 2);
     List<Groove> coveredGrooves = wall.coveredGrooves();
     assertThat(coveredGrooves)
@@ -29,7 +29,7 @@ public final class WallTest {
   }
 
   @Test
-  public void coveredEdges_length3_vertical() {
+  public void coveredGrooves_length3_vertical() {
     Wall wall = new Wall(Groove.vertical(Vertex.at('c', 3)), /*length=*/ 3);
     List<Groove> coveredGrooves = wall.coveredGrooves();
     assertThat(coveredGrooves)
@@ -40,7 +40,7 @@ public final class WallTest {
   }
 
   @Test
-  public void coveredEdges_length3_horizontal() {
+  public void coveredGrooves_length3_horizontal() {
     Wall wall = new Wall(Groove.horizontal(Vertex.at('c', 3)), /*length=*/ 3);
     List<Groove> coveredGrooves = wall.coveredGrooves();
     assertThat(coveredGrooves)

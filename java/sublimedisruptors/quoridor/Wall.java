@@ -41,10 +41,10 @@ public final class Wall {
   }
 
   private Stream<Groove> wallStream() {
-    return Stream.iterate(firstGroove, Wall::nextEdge);
+    return Stream.iterate(firstGroove, Wall::nextGroove);
   }
 
-  private static Groove nextEdge(Groove groove) {
+  private static Groove nextGroove(Groove groove) {
     if (groove.orientation() == Orientation.VERTICAL) {
       return Groove.vertical(Direction.DOWN.apply(groove.vertex()));
     } else {

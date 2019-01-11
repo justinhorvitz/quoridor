@@ -12,37 +12,37 @@ import org.junit.runners.JUnit4;
 public final class SquareTest {
 
   @Test
-  public void borderingEdge_up() {
+  public void borderingGroove_up() {
     Square square = Square.create(Vertex.at('c', 3));
-    Groove grooveAbove = square.borderingEdge(Direction.UP);
+    Groove grooveAbove = square.borderingGroove(Direction.UP);
     assertThat(grooveAbove).isEqualTo(Groove.horizontal(Vertex.at('b', 2)));
   }
 
   @Test
-  public void borderingEdge_down() {
+  public void borderingGroove_down() {
     Square square = Square.create(Vertex.at('c', 3));
-    Groove grooveBelow = square.borderingEdge(Direction.DOWN);
+    Groove grooveBelow = square.borderingGroove(Direction.DOWN);
     assertThat(grooveBelow).isEqualTo(Groove.horizontal(Vertex.at('c', 3)));
   }
 
   @Test
-  public void borderingEdge_left() {
+  public void borderingGroove_left() {
     Square square = Square.create(Vertex.at('c', 3));
-    Groove grooveLeft = square.borderingEdge(Direction.LEFT);
+    Groove grooveLeft = square.borderingGroove(Direction.LEFT);
     assertThat(grooveLeft).isEqualTo(Groove.vertical(Vertex.at('b', 2)));
   }
 
   @Test
-  public void borderingEdge_right() {
+  public void borderingGroove_right() {
     Square square = Square.create(Vertex.at('c', 3));
-    Groove grooveRight = square.borderingEdge(Direction.RIGHT);
+    Groove grooveRight = square.borderingGroove(Direction.RIGHT);
     assertThat(grooveRight).isEqualTo(Groove.vertical(Vertex.at('c', 3)));
   }
 
   @Test
-  public void borderingEdge_null_throws() {
+  public void borderingGroove_null_throws() {
     Square square = Square.create(Vertex.at('c', 3));
-    assertThrows(RuntimeException.class, () -> square.borderingEdge(null));
+    assertThrows(RuntimeException.class, () -> square.borderingGroove(null));
   }
 
   @Test
