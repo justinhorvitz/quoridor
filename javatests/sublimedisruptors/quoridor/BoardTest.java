@@ -30,7 +30,7 @@ public final class BoardTest {
   public void boardInitiallyEmpty() {
     Board board = Board.createFromSettings(settings.build());
     assertThat(board.getPawns()).isEmpty();
-    assertThat(board.getWalledOffEdges()).isEmpty();
+    assertThat(board.getWalledOffGrooves()).isEmpty();
     assertThat(board.getWalledOffVertices()).isEmpty();
   }
 
@@ -58,9 +58,9 @@ public final class BoardTest {
   public void placeWall() {
     settings.setPlayers(Player.PLAYER1, Player.PLAYER2).setWallsPerPlayer(2).setWallSize(3);
     Board board = Board.createFromSettings(settings.build());
-    Wall wall = new Wall(Edge.vertical(Vertex.at('a', 1)), /*length=*/ 3);
+    Wall wall = new Wall(Groove.vertical(Vertex.at('a', 1)), /*length=*/ 3);
     board.placeWall(wall, Player.PLAYER1);
-    assertThat(board.getWalledOffEdges()).containsExactlyElementsIn(wall.coveredEdges());
+    assertThat(board.getWalledOffGrooves()).containsExactlyElementsIn(wall.coveredGrooves());
     assertThat(board.getWalledOffVertices()).containsExactlyElementsIn(wall.coveredVertices());
     assertThat(board.getWallsAvailable()).containsExactly(Player.PLAYER1, 1, Player.PLAYER2, 2);
   }

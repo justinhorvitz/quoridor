@@ -5,50 +5,50 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.google.common.collect.ImmutableList;
 import java.util.stream.Stream;
-import sublimedisruptors.quoridor.Edge.Orientation;
+import sublimedisruptors.quoridor.Groove.Orientation;
 
 /**
  * A quoridor wall.
  *
- * <p>A {@code Wall} is simply one or more {@linkplain Edge edges}. In a classic quoridor game,
- * each wall covers two edges. In this case, {@link #coveredEdges} returns a list of size two and
- * {@link #coveredVertices} returns a list of size 1.
+ * <p>A {@code Wall} is simply one or more {@linkplain Groove grooves}. In a classic quoridor game,
+ * each wall covers two grooves. In this case, {@link #coveredGrooves} returns a list of size two
+ * and {@link #coveredVertices} returns a list of size 1.
  *
  * <p>Walls have two unique invariants that may be used to determine whether any two wall instances
  * can be placed on the same board:
  *
  * <ol>
- *   <li>No two walls on the board may share a common {@linkplain #coveredEdges covered edge}.
+ *   <li>No two walls on the board may share a common {@linkplain #coveredGrooves covered groove}.
  *   <li>No two walls on the board may share a common {@linkplain #coveredVertices covered vertex}.
  * </ol>
  */
 public final class Wall {
 
-  private final Edge firstEdge;
+  private final Groove firstGroove;
   private final int length;
 
-  Wall(Edge firstEdge, int length) {
-    this.firstEdge = checkNotNull(firstEdge);
+  Wall(Groove firstGroove, int length) {
+    this.firstGroove = checkNotNull(firstGroove);
     this.length = length;
   }
 
-  public ImmutableList<Edge> coveredEdges() {
+  public ImmutableList<Groove> coveredGrooves() {
     return wallStream().limit(length).collect(toImmutableList());
   }
 
   public ImmutableList<Vertex> coveredVertices() {
-    return wallStream().limit(length - 1).map(Edge::vertex).collect(toImmutableList());
+    return wallStream().limit(length - 1).map(Groove::vertex).collect(toImmutableList());
   }
 
-  private Stream<Edge> wallStream() {
-    return Stream.iterate(firstEdge, Wall::nextEdge);
+  private Stream<Groove> wallStream() {
+    return Stream.iterate(firstGroove, Wall::nextEdge);
   }
 
-  private static Edge nextEdge(Edge edge) {
-    if (edge.orientation() == Orientation.VERTICAL) {
-      return Edge.vertical(Direction.DOWN.apply(edge.vertex()));
+  private static Groove nextEdge(Groove groove) {
+    if (groove.orientation() == Orientation.VERTICAL) {
+      return Groove.vertical(Direction.DOWN.apply(groove.vertex()));
     } else {
-      return Edge.horizontal(Direction.RIGHT.apply(edge.vertex()));
+      return Groove.horizontal(Direction.RIGHT.apply(groove.vertex()));
     }
   }
 }

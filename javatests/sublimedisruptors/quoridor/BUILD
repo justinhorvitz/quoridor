@@ -17,8 +17,8 @@ java_test(
 )
 
 java_test(
-    name = "EdgeTest",
-    srcs = ["EdgeTest.java"],
+    name = "GrooveTest",
+    srcs = ["GrooveTest.java"],
     deps = [
         "//deps:truth",
         "//java/sublimedisruptors/quoridor",

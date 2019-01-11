@@ -13,7 +13,7 @@ import java.util.Set;
  * A Quoridor game board.
  *
  * <p>The state of the board is fully observable through its {@link #size()} and its four getter
- * methods: {@link #getPawns}, {@link #getWallsAvailable}, {@link #getWalledOffEdges}, and {@link
+ * methods: {@link #getPawns}, {@link #getWallsAvailable}, {@link #getWalledOffGrooves}, and {@link
  * #getWalledOffVertices}. These methods, however, all return <em>immutable</em> snapshots of the
  * board. The board is only mutable via {@link #movePawn} and {@link #placeWall}.
  *
@@ -37,7 +37,7 @@ public final class Board {
   private final int size;
   private final Map<Player, Integer> wallsAvailable;
   private final Map<Player, Square> pawns = new EnumMap<>(Player.class);
-  private final Set<Edge> walledOffEdges = new HashSet<>();
+  private final Set<Groove> walledOffGrooves = new HashSet<>();
   private final Set<Vertex> walledOffVertices = new HashSet<>();
 
   private Board(int size, Map<Player, Integer> wallsAvailable) {
@@ -75,7 +75,7 @@ public final class Board {
    * <p>No validation is performed to determine whether the wall can legally be placed.
    */
   public void placeWall(Wall wall, Player player) {
-    walledOffEdges.addAll(wall.coveredEdges());
+    walledOffGrooves.addAll(wall.coveredGrooves());
     walledOffVertices.addAll(wall.coveredVertices());
     wallsAvailable.merge(player, -1, Integer::sum);
   }
@@ -85,9 +85,9 @@ public final class Board {
     return ImmutableMap.copyOf(wallsAvailable);
   }
 
-  /** Returns the set of edges that are walled off. */
-  public ImmutableSet<Edge> getWalledOffEdges() {
-    return ImmutableSet.copyOf(walledOffEdges);
+  /** Returns the set of grooves that are walled off. */
+  public ImmutableSet<Groove> getWalledOffGrooves() {
+    return ImmutableSet.copyOf(walledOffGrooves);
   }
 
   /** Returns the set of vertices that are walled off. */

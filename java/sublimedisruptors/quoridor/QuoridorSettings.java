@@ -14,6 +14,10 @@ import com.google.common.collect.ImmutableList;
  * <p>Custom settings may be constructed via the {@link Builder}. Settings are validated when
  * calling {@link Builder#build}. See documentation for each of the builder's setter methods for
  * details on what is required for validity.
+ *
+ * <p>To guarantee validity, classes that depend on one or more of these settings should consider
+ * having an initializer that accepts a {@code QuoridorSettings} object as opposed to accepting the
+ * settings as arguments directly.
  */
 @AutoValue
 public abstract class QuoridorSettings {
@@ -55,7 +59,9 @@ public abstract class QuoridorSettings {
   /** The number of {@linkplain Wall walls} each player has at the beginning of the game. */
   public abstract int wallsPerPlayer();
 
-  /** The size of each {@link Wall}, in terms of the number of {@linkplain Edge edges} it covers. */
+  /**
+   * The size of each {@link Wall}, in terms of the number of {@linkplain Groove grooves} it covers.
+   */
   public abstract int wallSize();
 
   /** Converts these settings to a {@link Builder} with the same settings. */

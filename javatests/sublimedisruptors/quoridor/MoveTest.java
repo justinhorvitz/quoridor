@@ -23,7 +23,7 @@ public final class MoveTest {
 
   @Test
   public void wallMove() {
-    Wall wall = new Wall(Edge.vertical(Vertex.at('c', 3)), /*length=*/ 2);
+    Wall wall = new Wall(Groove.vertical(Vertex.at('c', 3)), /*length=*/ 2);
     Move wallMove = Move.wallMove(Player.PLAYER1, wall);
     assertThat(wallMove.player()).isEqualTo(Player.PLAYER1);
     assertThat(wallMove.type()).isEqualTo(Move.Type.WALL);

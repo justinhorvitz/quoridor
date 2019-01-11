@@ -5,7 +5,7 @@ import com.google.auto.value.AutoValue;
 /**
  * An individual square on the board.
  *
- * <p>A {@code Square} is bordered by an {@link Edge} and another {@code Square} in each {@link
+ * <p>A {@code Square} is bordered by an {@link Groove} and another {@code Square} in each {@link
  * Direction}.
  */
 @AutoValue
@@ -17,19 +17,17 @@ public abstract class Square {
 
   public abstract Vertex vertex();
 
-  /**
-   * Returns the {@link Edge} that borders this square in the given {@link Direction}.
-   */
-  public final Edge borderingEdge(Direction direction) {
+  /** Returns the {@link Groove} that borders this square in the given {@link Direction}. */
+  public final Groove borderingEdge(Direction direction) {
     switch (direction) {
       case UP:
-        return Edge.horizontal(upLeftVertex());
+        return Groove.horizontal(upLeftVertex());
       case DOWN:
-        return Edge.horizontal(vertex());
+        return Groove.horizontal(vertex());
       case LEFT:
-        return Edge.vertical(upLeftVertex());
+        return Groove.vertical(upLeftVertex());
       case RIGHT:
-        return Edge.vertical(vertex());
+        return Groove.vertical(vertex());
     }
     throw new IllegalArgumentException("Unexpected direction: " + direction);
   }
