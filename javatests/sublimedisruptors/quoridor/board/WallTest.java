@@ -13,14 +13,14 @@ public final class WallTest {
 
   @Test
   public void coveredGrooves_length2_vertical() {
-    Wall wall = new Wall(Groove.vertical('c', 3), /*length=*/ 2);
+    Wall wall = Wall.vertical('c', 3).withLength(2);
     List<Groove> coveredGrooves = wall.coveredGrooves();
     assertThat(coveredGrooves).containsExactly(Groove.vertical('c', 3), Groove.vertical('c', 4));
   }
 
   @Test
   public void coveredGrooves_length2_horizontal() {
-    Wall wall = new Wall(Groove.horizontal('c', 3), /*length=*/ 2);
+    Wall wall = Wall.horizontal('c', 3).withLength(2);
     List<Groove> coveredGrooves = wall.coveredGrooves();
     assertThat(coveredGrooves)
         .containsExactly(Groove.horizontal('c', 3), Groove.horizontal('d', 3));
@@ -28,7 +28,7 @@ public final class WallTest {
 
   @Test
   public void coveredGrooves_length3_vertical() {
-    Wall wall = new Wall(Groove.vertical('c', 3), /*length=*/ 3);
+    Wall wall = Wall.vertical('c', 3).withLength(3);
     List<Groove> coveredGrooves = wall.coveredGrooves();
     assertThat(coveredGrooves)
         .containsExactly(Groove.vertical('c', 3), Groove.vertical('c', 4), Groove.vertical('c', 5));
@@ -36,7 +36,7 @@ public final class WallTest {
 
   @Test
   public void coveredGrooves_length3_horizontal() {
-    Wall wall = new Wall(Groove.horizontal('c', 3), /*length=*/ 3);
+    Wall wall = Wall.horizontal('c', 3).withLength(3);
     List<Groove> coveredGrooves = wall.coveredGrooves();
     assertThat(coveredGrooves)
         .containsExactly(
@@ -45,28 +45,28 @@ public final class WallTest {
 
   @Test
   public void coveredVertices_length2_vertical() {
-    Wall wall = new Wall(Groove.vertical('c', 3), /*length=*/ 2);
+    Wall wall = Wall.vertical('c', 3).withLength(2);
     List<Vertex> coveredVertices = wall.coveredVertices();
     assertThat(coveredVertices).containsExactly(Vertex.at('c', 3));
   }
 
   @Test
   public void coveredVertices_length2_horizontal() {
-    Wall wall = new Wall(Groove.horizontal('c', 3), /*length=*/ 2);
+    Wall wall = Wall.horizontal('c', 3).withLength(2);
     List<Vertex> coveredVertices = wall.coveredVertices();
     assertThat(coveredVertices).containsExactly(Vertex.at('c', 3));
   }
 
   @Test
   public void coveredVertices_length3_vertical() {
-    Wall wall = new Wall(Groove.vertical('c', 3), /*length=*/ 3);
+    Wall wall = Wall.vertical('c', 3).withLength(3);
     List<Vertex> coveredVertices = wall.coveredVertices();
     assertThat(coveredVertices).containsExactly(Vertex.at('c', 3), Vertex.at('c', 4));
   }
 
   @Test
   public void coveredVertices_length3_horizontal() {
-    Wall wall = new Wall(Groove.horizontal('c', 3), /*length=*/ 3);
+    Wall wall = Wall.horizontal('c', 3).withLength(3);
     List<Vertex> coveredVertices = wall.coveredVertices();
     assertThat(coveredVertices).containsExactly(Vertex.at('c', 3), Vertex.at('d', 3));
   }

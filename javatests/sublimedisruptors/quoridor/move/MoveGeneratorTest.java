@@ -10,7 +10,6 @@ import org.junit.runners.JUnit4;
 import sublimedisruptors.quoridor.Player;
 import sublimedisruptors.quoridor.QuoridorSettings;
 import sublimedisruptors.quoridor.board.Board;
-import sublimedisruptors.quoridor.board.Groove;
 import sublimedisruptors.quoridor.board.Square;
 import sublimedisruptors.quoridor.board.Wall;
 
@@ -129,7 +128,7 @@ public final class MoveGeneratorTest {
      */
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
-    board.placeWall(new Wall(Groove.horizontal('c', 2), /*length=*/ 1), Player.PLAYER2);
+    board.placeWall(Wall.horizontal('c', 2).withLength(1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves).containsExactly(Move.pawnMove(Player.PLAYER1, Square.at('b', 3)));
   }
@@ -149,7 +148,7 @@ public final class MoveGeneratorTest {
      */
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
-    board.placeWall(new Wall(Groove.vertical('b', 3), /*length=*/ 1), Player.PLAYER2);
+    board.placeWall(Wall.vertical('b', 3).withLength(1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves).containsExactly(Move.pawnMove(Player.PLAYER1, Square.at('c', 2)));
   }
@@ -169,7 +168,7 @@ public final class MoveGeneratorTest {
      */
     board.movePawn(Player.PLAYER2, Square.at('b', 2));
     board.movePawn(Player.PLAYER1, Square.at('b', 3));
-    board.placeWall(new Wall(Groove.horizontal('b', 1), /*length=*/ 1), Player.PLAYER2);
+    board.placeWall(Wall.horizontal('b', 1).withLength(1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
@@ -219,7 +218,7 @@ public final class MoveGeneratorTest {
      */
     board.movePawn(Player.PLAYER2, Square.at('a', 2));
     board.movePawn(Player.PLAYER1, Square.at('b', 2));
-    board.placeWall(new Wall(Groove.horizontal('a', 1), /*length=*/ 1), Player.PLAYER2);
+    board.placeWall(Wall.horizontal('a', 1).withLength(1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(

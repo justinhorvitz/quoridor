@@ -58,7 +58,7 @@ public final class BoardTest {
   public void placeWall() {
     settings.setPlayers(Player.PLAYER1, Player.PLAYER2).setWallsPerPlayer(2).setWallSize(3);
     Board board = Board.createFromSettings(settings.build());
-    Wall wall = new Wall(Groove.vertical('a', 1), /*length=*/ 3);
+    Wall wall = Wall.vertical('a', 1).withLength(3);
     board.placeWall(wall, Player.PLAYER1);
     assertThat(board.getWalledOffGrooves()).containsExactlyElementsIn(wall.coveredGrooves());
     assertThat(board.getWalledOffVertices()).containsExactlyElementsIn(wall.coveredVertices());

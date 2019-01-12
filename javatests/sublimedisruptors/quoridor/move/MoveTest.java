@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import sublimedisruptors.quoridor.Player;
-import sublimedisruptors.quoridor.board.Groove;
 import sublimedisruptors.quoridor.board.Square;
 import sublimedisruptors.quoridor.board.Wall;
 
@@ -27,7 +26,7 @@ public final class MoveTest {
 
   @Test
   public void wallMove() {
-    Wall wall = new Wall(Groove.vertical('c', 3), /*length=*/ 2);
+    Wall wall = Wall.vertical('c', 3).withLength(2);
     Move wallMove = Move.wallMove(Player.PLAYER1, wall);
     assertThat(wallMove.player()).isEqualTo(Player.PLAYER1);
     assertThat(wallMove.type()).isEqualTo(Move.Type.WALL);

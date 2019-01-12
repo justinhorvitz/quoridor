@@ -19,7 +19,8 @@ import com.google.common.collect.Interners;
 public abstract class Groove implements Locatable {
 
   public enum Orientation {
-    VERTICAL, HORIZONTAL
+    VERTICAL,
+    HORIZONTAL
   }
 
   private static final Interner<Groove> interner = Interners.newStrongInterner();
