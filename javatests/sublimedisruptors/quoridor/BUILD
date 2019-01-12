@@ -36,6 +36,15 @@ java_test(
 )
 
 java_test(
+    name = "MoveGeneratorTest",
+    srcs = ["MoveGeneratorTest.java"],
+    deps = [
+        "//deps:truth",
+        "//java/sublimedisruptors/quoridor",
+    ],
+)
+
+java_test(
     name = "QuoridorSettingsTest",
     srcs = ["QuoridorSettingsTest.java"],
     deps = [
