@@ -3,6 +3,8 @@ package sublimedisruptors.quoridor.board;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.Interner;
+import com.google.common.collect.Interners;
 import sublimedisruptors.quoridor.board.Groove.Orientation;
 
 /**
@@ -14,8 +16,10 @@ import sublimedisruptors.quoridor.board.Groove.Orientation;
 @AutoValue
 public abstract class Square implements Locatable {
 
+  private static final Interner<Square> interner = Interners.newStrongInterner();
+
   public static Square at(char column, int row) {
-    return new AutoValue_Square(column, row);
+    return interner.intern(new AutoValue_Square(column, row));
   }
 
   /** Returns the {@link Groove} that borders this square in the given {@link Direction}. */
@@ -32,7 +36,7 @@ public abstract class Square implements Locatable {
 
   /** Returns the adjacent {@link Square} in the given {@link Direction}. */
   public final Square adjacentSquare(Direction direction) {
-    Vertex adjacent = direction.apply(this);
+    Locatable adjacent = direction.apply(this);
     return Square.at(adjacent.column(), adjacent.row());
   }
 }

@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.google.common.collect.ImmutableList;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import sublimedisruptors.quoridor.board.Groove.Orientation;
 
@@ -33,24 +34,29 @@ public final class Wall {
   }
 
   public ImmutableList<Groove> coveredGrooves() {
-    return wallStream().limit(length).collect(toImmutableList());
-  }
-
-  public ImmutableList<Vertex> coveredVertices() {
     return wallStream()
-        .limit(length - 1)
-        .map(groove -> Vertex.at(groove.column(), groove.row()))
+        .limit(length)
+        .map(vertex -> Groove.groove(vertex.column(), vertex.row(), orientation()))
         .collect(toImmutableList());
   }
 
-  private Stream<Groove> wallStream() {
-    return Stream.iterate(firstGroove, Wall::nextGroove);
+  public ImmutableList<Vertex> coveredVertices() {
+    return wallStream().limit(length - 1).collect(toImmutableList());
   }
 
-  private static Groove nextGroove(Groove groove) {
-    Direction direction =
-        groove.orientation() == Orientation.VERTICAL ? Direction.DOWN : Direction.RIGHT;
-    Vertex nextLocation = direction.apply(groove);
-    return Groove.groove(nextLocation.column(), nextLocation.row(), groove.orientation());
+  private Orientation orientation() {
+    return firstGroove.orientation();
+  }
+
+  private Stream<Vertex> wallStream() {
+    return Stream.iterate(firstVertex(), direction());
+  }
+
+  private Vertex firstVertex() {
+    return Vertex.at(firstGroove.column(), firstGroove.row());
+  }
+
+  private UnaryOperator<Vertex> direction() {
+    return orientation() == Orientation.VERTICAL ? Direction.DOWN::apply : Direction.RIGHT::apply;
   }
 }

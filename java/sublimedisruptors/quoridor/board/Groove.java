@@ -1,6 +1,8 @@
 package sublimedisruptors.quoridor.board;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.Interner;
+import com.google.common.collect.Interners;
 
 /**
  * Represents the groove between squares on a Quoridor board.
@@ -20,6 +22,8 @@ public abstract class Groove implements Locatable {
     VERTICAL, HORIZONTAL
   }
 
+  private static final Interner<Groove> interner = Interners.newStrongInterner();
+
   public static Groove vertical(char column, int row) {
     return groove(column, row, Orientation.VERTICAL);
   }
@@ -29,7 +33,7 @@ public abstract class Groove implements Locatable {
   }
 
   static Groove groove(char column, int row, Orientation orientation) {
-    return new AutoValue_Groove(column, row, orientation);
+    return interner.intern(new AutoValue_Groove(column, row, orientation));
   }
 
   public abstract Orientation orientation();

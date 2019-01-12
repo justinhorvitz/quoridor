@@ -1,18 +1,18 @@
 package sublimedisruptors.quoridor.board;
 
+import java.util.function.Function;
 import java.util.function.IntUnaryOperator;
-import java.util.function.UnaryOperator;
 
 /**
  * The four ordinal directions.
  *
- * <p>A direction acts as a {@link UnaryOperator} on a {@link Locatable} to provide the next vertex
- * in a given direction.
+ * <p>A direction acts as a {@link Function} on a {@link Locatable} to provide the next {@link
+ * Vertex} in a given direction.
  *
  * <p>Each direction is intended to be interpreted from the perspective of the diagram in the
  * Javadoc for {@link Locatable}, with player one at the bottom and player two at the top.
  */
-public enum Direction implements UnaryOperator<Locatable> {
+public enum Direction implements Function<Locatable, Vertex> {
   UP(col -> col, row -> row - 1),
   DOWN(col -> col, row -> row + 1),
   LEFT(col -> col - 1, row -> row),
