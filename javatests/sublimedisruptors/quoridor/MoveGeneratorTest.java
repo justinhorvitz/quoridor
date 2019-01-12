@@ -30,15 +30,15 @@ public final class MoveGeneratorTest {
      *               -------------
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('a', 1)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('b', 2)));
+    board.movePawn(Player.PLAYER2, Square.at('a', 1));
+    board.movePawn(Player.PLAYER1, Square.at('b', 2));
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 1))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 3))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('a', 2))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 2))));
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 1)),
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 3)),
+            Move.pawnMove(Player.PLAYER1, Square.at('a', 2)),
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 2)));
   }
 
   @Test
@@ -54,14 +54,14 @@ public final class MoveGeneratorTest {
      *               -------------
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('a', 1)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('c', 2)));
+    board.movePawn(Player.PLAYER2, Square.at('a', 1));
+    board.movePawn(Player.PLAYER1, Square.at('c', 2));
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 1))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 3))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 2))));
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 1)),
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 3)),
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 2)));
   }
 
   @Test
@@ -77,13 +77,13 @@ public final class MoveGeneratorTest {
      *               -------------
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('a', 1)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('c', 3)));
+    board.movePawn(Player.PLAYER2, Square.at('a', 1));
+    board.movePawn(Player.PLAYER1, Square.at('c', 3));
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 2))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 3))));
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 2)),
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 3)));
   }
 
   @Test
@@ -99,13 +99,13 @@ public final class MoveGeneratorTest {
      *               -------------
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('c', 2)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('c', 3)));
+    board.movePawn(Player.PLAYER2, Square.at('c', 2));
+    board.movePawn(Player.PLAYER1, Square.at('c', 3));
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 1))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 3))));
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 1)),
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 3)));
   }
 
   @Test
@@ -121,12 +121,11 @@ public final class MoveGeneratorTest {
      *               -------------
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('a', 1)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('c', 3)));
+    board.movePawn(Player.PLAYER2, Square.at('a', 1));
+    board.movePawn(Player.PLAYER1, Square.at('c', 3));
     board.placeWall(new Wall(Groove.horizontal(Vertex.at('c', 2)), /*length=*/ 1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
-    assertThat(moves)
-        .containsExactly(Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 3))));
+    assertThat(moves).containsExactly(Move.pawnMove(Player.PLAYER1, Square.at('b', 3)));
   }
 
   @Test
@@ -142,12 +141,11 @@ public final class MoveGeneratorTest {
      *               --------+----
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('a', 1)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('c', 3)));
+    board.movePawn(Player.PLAYER2, Square.at('a', 1));
+    board.movePawn(Player.PLAYER1, Square.at('c', 3));
     board.placeWall(new Wall(Groove.vertical(Vertex.at('b', 3)), /*length=*/ 1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
-    assertThat(moves)
-        .containsExactly(Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 2))));
+    assertThat(moves).containsExactly(Move.pawnMove(Player.PLAYER1, Square.at('c', 2)));
   }
 
   @Test
@@ -163,16 +161,16 @@ public final class MoveGeneratorTest {
      *               -------------
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('b', 2)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('b', 3)));
+    board.movePawn(Player.PLAYER2, Square.at('b', 2));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
     board.placeWall(new Wall(Groove.horizontal(Vertex.at('b', 1)), /*length=*/ 1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('a', 2))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 2))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('a', 3))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 3))));
+            Move.pawnMove(Player.PLAYER1, Square.at('a', 2)),
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 2)),
+            Move.pawnMove(Player.PLAYER1, Square.at('a', 3)),
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 3)));
   }
 
   @Test
@@ -188,16 +186,16 @@ public final class MoveGeneratorTest {
      *               -------------
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('a', 2)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('b', 2)));
+    board.movePawn(Player.PLAYER2, Square.at('a', 2));
+    board.movePawn(Player.PLAYER1, Square.at('b', 2));
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('a', 1))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('a', 3))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 1))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 3))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 2))));
+            Move.pawnMove(Player.PLAYER1, Square.at('a', 1)),
+            Move.pawnMove(Player.PLAYER1, Square.at('a', 3)),
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 1)),
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 3)),
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 2)));
   }
 
   @Test
@@ -213,21 +211,21 @@ public final class MoveGeneratorTest {
      *               -------------
      *                 a   b   c
      */
-    board.movePawn(Player.PLAYER2, Square.create(Vertex.at('a', 2)));
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('b', 2)));
+    board.movePawn(Player.PLAYER2, Square.at('a', 2));
+    board.movePawn(Player.PLAYER1, Square.at('b', 2));
     board.placeWall(new Wall(Groove.horizontal(Vertex.at('a', 1)), /*length=*/ 1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('a', 3))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 1))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 3))),
-            Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 2))));
+            Move.pawnMove(Player.PLAYER1, Square.at('a', 3)),
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 1)),
+            Move.pawnMove(Player.PLAYER1, Square.at('b', 3)),
+            Move.pawnMove(Player.PLAYER1, Square.at('c', 2)));
   }
 
   @Test
   public void noPawnOnBoard_throws() {
-    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('c', 3)));
+    board.movePawn(Player.PLAYER1, Square.at('c', 3));
     assertThrows(
         IllegalStateException.class, () -> moveGenerator.generateValidPawnMoves(Player.PLAYER3));
   }

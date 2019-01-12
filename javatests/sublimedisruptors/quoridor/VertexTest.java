@@ -1,6 +1,6 @@
 package sublimedisruptors.quoridor;
 
-import static com.google.common.truth.Truth.assertThat;
+import static sublimedisruptors.quoridor.testing.LocatableSubject.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +13,7 @@ public final class VertexTest {
   @Test
   public void at() {
     Vertex vertex = Vertex.at('c', 3);
-    assertThat(vertex.column()).isEqualTo('c');
-    assertThat(vertex.row()).isEqualTo(3);
+    assertThat(vertex).isLocatedAt('c', 3);
   }
 }
 

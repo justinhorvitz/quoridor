@@ -37,21 +37,18 @@ public final class BoardTest {
   @Test
   public void movePawn_notPreviouslyOnBoard() {
     Board board = Board.createFromSettings(settings.build());
-    Square e1 = Square.create(Vertex.at('e', 1));
-    board.movePawn(Player.PLAYER2, e1);
-    assertThat(board.getPawns()).containsExactly(Player.PLAYER2, e1);
+    board.movePawn(Player.PLAYER2, Square.at('e', 1));
+    assertThat(board.getPawns()).containsExactly(Player.PLAYER2, Square.at('e', 1));
   }
 
   @Test
   public void movePawn_previouslyOnBoard() {
     Board board = Board.createFromSettings(settings.build());
-    Square e1 = Square.create(Vertex.at('e', 1));
-    Square e9 = Square.create(Vertex.at('e', 9));
-    board.movePawn(Player.PLAYER2, e1);
-    board.movePawn(Player.PLAYER1, e9);
-    Square e8 = Square.create(Vertex.at('e', 8));
-    board.movePawn(Player.PLAYER1, e8);
-    assertThat(board.getPawns()).containsExactly(Player.PLAYER1, e8, Player.PLAYER2, e1);
+    board.movePawn(Player.PLAYER2, Square.at('e', 1));
+    board.movePawn(Player.PLAYER1, Square.at('e', 9));
+    board.movePawn(Player.PLAYER1, Square.at('e', 8));
+    assertThat(board.getPawns())
+        .containsExactly(Player.PLAYER1, Square.at('e', 8), Player.PLAYER2, Square.at('e', 1));
   }
 
   @Test

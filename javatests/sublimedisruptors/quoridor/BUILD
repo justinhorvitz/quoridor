@@ -22,6 +22,7 @@ java_test(
     deps = [
         "//deps:truth",
         "//java/sublimedisruptors/quoridor",
+        "//java/sublimedisruptors/quoridor/testing",
     ],
 )
 
@@ -41,6 +42,7 @@ java_test(
     deps = [
         "//deps:truth",
         "//java/sublimedisruptors/quoridor",
+        "//java/sublimedisruptors/quoridor/testing",
     ],
 )
 
@@ -69,8 +71,8 @@ java_test(
     name = "VertexTest",
     srcs = ["VertexTest.java"],
     deps = [
-        "//deps:truth",
         "//java/sublimedisruptors/quoridor",
+        "//java/sublimedisruptors/quoridor/testing",
     ],
 )
 

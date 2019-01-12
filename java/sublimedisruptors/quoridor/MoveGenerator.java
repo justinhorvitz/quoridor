@@ -36,7 +36,7 @@ public final class MoveGenerator {
       if (walledOffGrooves.contains(currentSquare.borderingGroove(direction))) {
         continue;
       }
-      Square adjacentSquare = currentSquare.borderingSquare(direction);
+      Square adjacentSquare = currentSquare.adjacentSquare(direction);
       if (!isInBounds(adjacentSquare, board)) {
         continue;
       }
@@ -46,7 +46,7 @@ public final class MoveGenerator {
       }
       // An adjacent square is occupied by a pawn. Check whether that pawn can be jumped.
       if (!walledOffGrooves.contains(adjacentSquare.borderingGroove(direction))) {
-        Square jump = adjacentSquare.borderingSquare(direction);
+        Square jump = adjacentSquare.adjacentSquare(direction);
         if (isInBounds(jump, board) && !pawns.containsValue(jump)) {
           moves.add(Move.pawnMove(player, jump));
           continue;
@@ -61,7 +61,7 @@ public final class MoveGenerator {
         if (walledOffGrooves.contains(adjacentSquare.borderingGroove(orthogonal))) {
           continue;
         }
-        Square diagonalSquare = adjacentSquare.borderingSquare(orthogonal);
+        Square diagonalSquare = adjacentSquare.adjacentSquare(orthogonal);
         if (isInBounds(diagonalSquare, board) && !pawns.containsValue(diagonalSquare)) {
           moves.add(Move.pawnMove(player, diagonalSquare));
         }
@@ -71,8 +71,7 @@ public final class MoveGenerator {
   }
 
   private static boolean isInBounds(Square square, Board board) {
-    Vertex vertex = square.vertex();
-    return Range.closed('a', (char) ('a' + board.size() - 1)).contains(vertex.column())
-        && Range.closed(1, board.size()).contains(vertex.row());
+    return Range.closed('a', (char) ('a' + board.size() - 1)).contains(square.column())
+        && Range.closed(1, board.size()).contains(square.row());
   }
 }

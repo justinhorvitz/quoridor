@@ -1,6 +1,7 @@
 package sublimedisruptors.quoridor;
 
 import static com.google.common.truth.Truth.assertThat;
+import static sublimedisruptors.quoridor.testing.LocatableSubject.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,14 +15,14 @@ public final class GrooveTest {
   @Test
   public void vertical() {
     Groove groove = Groove.vertical(Vertex.at('c', 3));
-    assertThat(groove.vertex()).isEqualTo(Vertex.at('c', 3));
+    assertThat(groove).isLocatedAt('c', 3);
     assertThat(groove.orientation()).isEqualTo(Orientation.VERTICAL);
   }
 
   @Test
   public void horizontal() {
     Groove groove = Groove.horizontal(Vertex.at('c', 3));
-    assertThat(groove.vertex()).isEqualTo(Vertex.at('c', 3));
+    assertThat(groove).isLocatedAt('c', 3);
     assertThat(groove.orientation()).isEqualTo(Orientation.HORIZONTAL);
   }
 }

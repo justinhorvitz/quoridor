@@ -4,5 +4,8 @@ java_library(
     name = "testing",
     testonly = 1,
     srcs = glob(["*.java"]),
-    deps = ["//deps:truth"],
+    deps = [
+        "//deps:truth",
+        "//java/sublimedisruptors/quoridor",
+    ],
 )

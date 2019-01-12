@@ -37,7 +37,7 @@ public final class Wall {
   }
 
   public ImmutableList<Vertex> coveredVertices() {
-    return wallStream().limit(length - 1).map(Groove::vertex).collect(toImmutableList());
+    return wallStream().limit(length - 1).map(Vertex::at).collect(toImmutableList());
   }
 
   private Stream<Groove> wallStream() {
@@ -46,10 +46,9 @@ public final class Wall {
 
   private static Groove nextGroove(Groove groove) {
     if (groove.orientation() == Orientation.VERTICAL) {
-      return Groove.vertical(Direction.DOWN.apply(groove.vertex()));
+      return Groove.vertical(Direction.DOWN.apply(groove));
     } else {
-      return Groove.horizontal(Direction.RIGHT.apply(groove.vertex()));
+      return Groove.horizontal(Direction.RIGHT.apply(groove));
     }
   }
 }
-
