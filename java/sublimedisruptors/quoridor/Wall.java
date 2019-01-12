@@ -37,7 +37,10 @@ public final class Wall {
   }
 
   public ImmutableList<Vertex> coveredVertices() {
-    return wallStream().limit(length - 1).map(Vertex::at).collect(toImmutableList());
+    return wallStream()
+        .limit(length - 1)
+        .map(groove -> Vertex.at(groove.column(), groove.row()))
+        .collect(toImmutableList());
   }
 
   private Stream<Groove> wallStream() {
