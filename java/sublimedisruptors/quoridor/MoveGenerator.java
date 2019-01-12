@@ -33,22 +33,24 @@ public final class MoveGenerator {
 
     ImmutableSet.Builder<Move> moves = ImmutableSet.builder();
     for (Direction direction : Direction.values()) {
-      Square borderingSquare = currentSquare.borderingSquare(direction);
-      if (!isInBounds(borderingSquare, board)
-          || walledOffGrooves.contains(currentSquare.borderingGroove(direction))) {
+      if (walledOffGrooves.contains(currentSquare.borderingGroove(direction))) {
         continue;
       }
-      if (!pawns.containsValue(borderingSquare)) {
-        moves.add(Move.pawnMove(player, borderingSquare));
+      Square adjacentSquare = currentSquare.borderingSquare(direction);
+      if (!isInBounds(adjacentSquare, board)) {
         continue;
       }
-      // A bordering square is occupied by a pawn. Check whether that pawn can be jumped.
-      Square jump = borderingSquare.borderingSquare(direction);
-      if (isInBounds(jump, board)
-          && !walledOffGrooves.contains(borderingSquare.borderingGroove(direction))
-          && !pawns.containsValue(jump)) {
-        moves.add(Move.pawnMove(player, jump));
+      if (!pawns.containsValue(adjacentSquare)) {
+        moves.add(Move.pawnMove(player, adjacentSquare));
         continue;
+      }
+      // An adjacent square is occupied by a pawn. Check whether that pawn can be jumped.
+      if (!walledOffGrooves.contains(adjacentSquare.borderingGroove(direction))) {
+        Square jump = adjacentSquare.borderingSquare(direction);
+        if (isInBounds(jump, board) && !pawns.containsValue(jump)) {
+          moves.add(Move.pawnMove(player, jump));
+          continue;
+        }
       }
       // A jump cannot be made. Check whether a diagonal move can be made.
       List<Direction> orthogonals =
@@ -56,10 +58,11 @@ public final class MoveGenerator {
               ? ImmutableList.of(Direction.LEFT, Direction.RIGHT)
               : ImmutableList.of(Direction.UP, Direction.DOWN);
       for (Direction orthogonal : orthogonals) {
-        Square diagonalSquare = borderingSquare.borderingSquare(orthogonal);
-        if (isInBounds(diagonalSquare, board)
-            && !walledOffGrooves.contains(borderingSquare.borderingGroove(orthogonal))
-            && !pawns.containsValue(diagonalSquare)) {
+        if (walledOffGrooves.contains(adjacentSquare.borderingGroove(orthogonal))) {
+          continue;
+        }
+        Square diagonalSquare = adjacentSquare.borderingSquare(orthogonal);
+        if (isInBounds(diagonalSquare, board) && !pawns.containsValue(diagonalSquare)) {
           moves.add(Move.pawnMove(player, diagonalSquare));
         }
       }

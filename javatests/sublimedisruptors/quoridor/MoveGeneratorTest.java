@@ -1,6 +1,7 @@
 package sublimedisruptors.quoridor;
 
 import static com.google.common.truth.Truth.assertThat;
+import static sublimedisruptors.quoridor.testing.TestUtils.assertThrows;
 
 import java.util.Set;
 import org.junit.Test;
@@ -222,5 +223,12 @@ public final class MoveGeneratorTest {
             Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 1))),
             Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('b', 3))),
             Move.pawnMove(Player.PLAYER1, Square.create(Vertex.at('c', 2))));
+  }
+
+  @Test
+  public void noPawnOnBoard_throws() {
+    board.movePawn(Player.PLAYER1, Square.create(Vertex.at('c', 3)));
+    assertThrows(
+        IllegalStateException.class, () -> moveGenerator.generateValidPawnMoves(Player.PLAYER3));
   }
 }
