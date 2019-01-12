@@ -38,19 +38,18 @@ public abstract class Wall {
   private static final Interner<Wall> interner = Interners.newStrongInterner();
 
   public static Builder vertical(char column, int row) {
-    return builder(column, row, Orientation.VERTICAL);
+    return builder(column, row).setOrientation(Orientation.VERTICAL);
   }
 
   public static Builder horizontal(char column, int row) {
-    return builder(column, row, Orientation.HORIZONTAL);
+    return builder(column, row).setOrientation(Orientation.HORIZONTAL);
   }
 
-  private static Builder builder(char column, int row, Orientation orientation) {
-    return new AutoValue_Wall.Builder()
-        .setFirstVertex(Vertex.at(column, row))
-        .setOrientation(orientation);
+  private static Builder builder(char column, int row) {
+    return new AutoValue_Wall.Builder().setFirstVertex(Vertex.at(column, row));
   }
 
+  /** Returns the {@linkplain Groove grooves} covered by this wall. */
   public final ImmutableList<Groove> coveredGrooves() {
     return vertexStream()
         .limit(length())
@@ -58,6 +57,7 @@ public abstract class Wall {
         .collect(toImmutableList());
   }
 
+  /** Returns the {@linkplain Vertex vertices} covered by this wall. */
   public final ImmutableList<Vertex> coveredVertices() {
     return vertexStream().limit(length() - 1).collect(toImmutableList());
   }
@@ -78,9 +78,7 @@ public abstract class Wall {
   }
 
   abstract Vertex firstVertex();
-
   abstract Orientation orientation();
-
   abstract int length();
 
   private Stream<Vertex> vertexStream() {
