@@ -1,6 +1,5 @@
 package sublimedisruptors.quoridor;
 
-import java.util.function.Function;
 import java.util.function.IntUnaryOperator;
 import java.util.function.UnaryOperator;
 
@@ -13,7 +12,7 @@ import java.util.function.UnaryOperator;
  * <p>Each direction is intended to be interpreted from the perspective of the diagram in the
  * Javadoc for {@link Locatable}, with player one at the bottom and player two at the top.
  */
-public enum Direction implements Function<Locatable, Vertex> {
+public enum Direction implements UnaryOperator<Locatable> {
   UP(col -> col, row -> row - 1),
   DOWN(col -> col, row -> row + 1),
   LEFT(col -> col - 1, row -> row),

@@ -1,6 +1,9 @@
 package sublimedisruptors.quoridor;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.auto.value.AutoValue;
+import sublimedisruptors.quoridor.Groove.Orientation;
 
 /**
  * An individual square on the board.
@@ -17,17 +20,14 @@ public abstract class Square implements Locatable {
 
   /** Returns the {@link Groove} that borders this square in the given {@link Direction}. */
   public final Groove borderingGroove(Direction direction) {
-    switch (direction) {
-      case UP:
-        return Groove.horizontal(Direction.UP.apply(this));
-      case DOWN:
-        return Groove.horizontal(this);
-      case LEFT:
-        return Groove.vertical(Direction.LEFT.apply(this));
-      case RIGHT:
-        return Groove.vertical(this);
-    }
-    throw new IllegalArgumentException("Unexpected direction: " + direction);
+    checkNotNull(direction);
+    Locatable grooveLocation =
+        direction == Direction.UP || direction == Direction.LEFT ? direction.apply(this) : this;
+    Orientation grooveOrientation =
+        direction == Direction.UP || direction == Direction.DOWN
+            ? Orientation.HORIZONTAL
+            : Orientation.VERTICAL;
+    return Groove.groove(grooveLocation.column(), grooveLocation.row(), grooveOrientation);
   }
 
   /** Returns the adjacent {@link Square} in the given {@link Direction}. */

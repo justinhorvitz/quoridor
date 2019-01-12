@@ -14,14 +14,14 @@ public final class GrooveTest {
 
   @Test
   public void vertical() {
-    Groove groove = Groove.vertical(Vertex.at('c', 3));
+    Groove groove = Groove.vertical('c', 3);
     assertThat(groove).isLocatedAt('c', 3);
     assertThat(groove.orientation()).isEqualTo(Orientation.VERTICAL);
   }
 
   @Test
   public void horizontal() {
-    Groove groove = Groove.horizontal(Vertex.at('c', 3));
+    Groove groove = Groove.horizontal('c', 3);
     assertThat(groove).isLocatedAt('c', 3);
     assertThat(groove.orientation()).isEqualTo(Orientation.HORIZONTAL);
   }

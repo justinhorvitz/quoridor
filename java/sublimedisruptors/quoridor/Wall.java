@@ -45,10 +45,9 @@ public final class Wall {
   }
 
   private static Groove nextGroove(Groove groove) {
-    if (groove.orientation() == Orientation.VERTICAL) {
-      return Groove.vertical(Direction.DOWN.apply(groove));
-    } else {
-      return Groove.horizontal(Direction.RIGHT.apply(groove));
-    }
+    Direction direction =
+        groove.orientation() == Orientation.VERTICAL ? Direction.DOWN : Direction.RIGHT;
+    Vertex nextLocation = direction.apply(groove);
+    return Groove.groove(nextLocation.column(), nextLocation.row(), groove.orientation());
   }
 }

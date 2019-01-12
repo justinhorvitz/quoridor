@@ -123,7 +123,7 @@ public final class MoveGeneratorTest {
      */
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
-    board.placeWall(new Wall(Groove.horizontal(Vertex.at('c', 2)), /*length=*/ 1), Player.PLAYER2);
+    board.placeWall(new Wall(Groove.horizontal('c', 2), /*length=*/ 1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves).containsExactly(Move.pawnMove(Player.PLAYER1, Square.at('b', 3)));
   }
@@ -143,7 +143,7 @@ public final class MoveGeneratorTest {
      */
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
-    board.placeWall(new Wall(Groove.vertical(Vertex.at('b', 3)), /*length=*/ 1), Player.PLAYER2);
+    board.placeWall(new Wall(Groove.vertical('b', 3), /*length=*/ 1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves).containsExactly(Move.pawnMove(Player.PLAYER1, Square.at('c', 2)));
   }
@@ -163,7 +163,7 @@ public final class MoveGeneratorTest {
      */
     board.movePawn(Player.PLAYER2, Square.at('b', 2));
     board.movePawn(Player.PLAYER1, Square.at('b', 3));
-    board.placeWall(new Wall(Groove.horizontal(Vertex.at('b', 1)), /*length=*/ 1), Player.PLAYER2);
+    board.placeWall(new Wall(Groove.horizontal('b', 1), /*length=*/ 1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(
@@ -213,7 +213,7 @@ public final class MoveGeneratorTest {
      */
     board.movePawn(Player.PLAYER2, Square.at('a', 2));
     board.movePawn(Player.PLAYER1, Square.at('b', 2));
-    board.placeWall(new Wall(Groove.horizontal(Vertex.at('a', 1)), /*length=*/ 1), Player.PLAYER2);
+    board.placeWall(new Wall(Groove.horizontal('a', 1), /*length=*/ 1), Player.PLAYER2);
     Set<Move> moves = moveGenerator.generateValidPawnMoves(Player.PLAYER1);
     assertThat(moves)
         .containsExactly(

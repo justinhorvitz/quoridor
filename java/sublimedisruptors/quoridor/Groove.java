@@ -20,12 +20,16 @@ public abstract class Groove implements Locatable {
     VERTICAL, HORIZONTAL
   }
 
-  public static Groove vertical(Locatable locatable) {
-    return new AutoValue_Groove(locatable.column(), locatable.row(), Orientation.VERTICAL);
+  public static Groove vertical(char column, int row) {
+    return groove(column, row, Orientation.VERTICAL);
   }
 
-  public static Groove horizontal(Locatable locatable) {
-    return new AutoValue_Groove(locatable.column(), locatable.row(), Orientation.HORIZONTAL);
+  public static Groove horizontal(char column, int row) {
+    return groove(column, row, Orientation.HORIZONTAL);
+  }
+
+  static Groove groove(char column, int row, Orientation orientation) {
+    return new AutoValue_Groove(column, row, orientation);
   }
 
   public abstract Orientation orientation();
