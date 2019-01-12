@@ -1,4 +1,4 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 /**
  * A type that can be located on a Quoridor board via its {@link #column} and {@link #row}.

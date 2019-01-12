@@ -1,11 +1,11 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 import com.google.common.collect.ImmutableList;
 import java.util.stream.Stream;
-import sublimedisruptors.quoridor.Groove.Orientation;
+import sublimedisruptors.quoridor.board.Groove.Orientation;
 
 /**
  * A quoridor wall.
@@ -27,7 +27,7 @@ public final class Wall {
   private final Groove firstGroove;
   private final int length;
 
-  Wall(Groove firstGroove, int length) {
+  public Wall(Groove firstGroove, int length) {
     this.firstGroove = checkNotNull(firstGroove);
     this.length = length;
   }

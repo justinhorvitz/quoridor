@@ -1,4 +1,4 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 import com.google.auto.value.AutoValue;
 

@@ -1,4 +1,4 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 import static com.google.common.truth.Truth.assertThat;
 import static sublimedisruptors.quoridor.testing.LocatableSubject.assertThat;
@@ -6,7 +6,7 @@ import static sublimedisruptors.quoridor.testing.LocatableSubject.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import sublimedisruptors.quoridor.Groove.Orientation;
+import sublimedisruptors.quoridor.board.Groove.Orientation;
 
 /** Tests for {@link Groove}. */
 @RunWith(JUnit4.class)

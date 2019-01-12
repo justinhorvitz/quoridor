@@ -1,4 +1,4 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -8,6 +8,8 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import sublimedisruptors.quoridor.Player;
+import sublimedisruptors.quoridor.QuoridorSettings;
 
 /**
  * A Quoridor game board.

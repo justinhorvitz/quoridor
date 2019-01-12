@@ -1,7 +1,10 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.move;
 
 import com.google.auto.value.AutoOneOf;
 import com.google.auto.value.AutoValue;
+import sublimedisruptors.quoridor.Player;
+import sublimedisruptors.quoridor.board.Square;
+import sublimedisruptors.quoridor.board.Wall;
 
 /**
  * A single move in a game of Quoridor.
@@ -17,12 +20,12 @@ import com.google.auto.value.AutoValue;
 public abstract class Move {
 
   /** Creates a move indicating that {@code player} is moving their pawn to {@code destination}. */
-  public static Move pawnMove(Player player, Square destination) {
+  static Move pawnMove(Player player, Square destination) {
     return new AutoValue_Move(player, AutoOneOf_Move_PawnOrWall.pawn(destination));
   }
 
   /** Creates a move indicating that {@code player} is placing {@code wall} on the board. */
-  public static Move wallMove(Player player, Wall wall) {
+  static Move wallMove(Player player, Wall wall) {
     return new AutoValue_Move(player, AutoOneOf_Move_PawnOrWall.wall(wall));
   }
 

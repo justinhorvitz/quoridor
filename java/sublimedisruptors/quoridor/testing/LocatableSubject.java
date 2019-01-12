@@ -5,7 +5,7 @@ import static com.google.common.truth.Truth.assertAbout;
 
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
-import sublimedisruptors.quoridor.Locatable;
+import sublimedisruptors.quoridor.board.Locatable;
 
 /** {@link Truth} extension for making assertions against {@link Locatable} objects. */
 public final class LocatableSubject extends Subject<LocatableSubject, Locatable> {

@@ -56,11 +56,15 @@ public abstract class QuoridorSettings {
    */
   public abstract ImmutableList<Player> players();
 
-  /** The number of {@linkplain Wall walls} each player has at the beginning of the game. */
+  /**
+   * The number of {@linkplain sublimedisruptors.quoridor.board.Wall walls} each player has at the
+   * beginning of the game.
+   */
   public abstract int wallsPerPlayer();
 
   /**
-   * The size of each {@link Wall}, in terms of the number of {@linkplain Groove grooves} it covers.
+   * The size of each {@link sublimedisruptors.quoridor.board.Wall}, in terms of the number of
+   * {@linkplain sublimedisruptors.quoridor.board.Groove grooves} it covers.
    */
   public abstract int wallSize();
 
@@ -95,7 +99,7 @@ public abstract class QuoridorSettings {
     public abstract Builder setWallsPerPlayer(int wallsPerPlayer);
 
     /**
-     * Sets the {@linkplain #wallSize size} of each {@link Wall}.
+     * Sets the {@linkplain #wallSize size} of each {@link sublimedisruptors.quoridor.board.Wall}.
      *
      * <p>This value must be at least 1.
      */

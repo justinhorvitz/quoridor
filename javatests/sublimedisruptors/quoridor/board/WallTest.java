@@ -1,4 +1,4 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 import static com.google.common.truth.Truth.assertThat;
 

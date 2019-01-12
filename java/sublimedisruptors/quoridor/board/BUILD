@@ -1,11 +1,11 @@
 package(default_visibility = ["//java/sublimedisruptors/quoridor:quoridor_packages"])
 
 java_library(
-    name = "testing",
-    testonly = 1,
+    name = "board",
     srcs = glob(["*.java"]),
     deps = [
-        "//deps:truth",
-        "//java/sublimedisruptors/quoridor/board",
+        "//deps:auto_value",
+        "//deps:guava",
+        "//java/sublimedisruptors/quoridor",
     ],
 )

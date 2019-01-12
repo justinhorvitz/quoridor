@@ -1,7 +1,7 @@
 package sublimedisruptors.quoridor.testing;
 
 import com.google.common.truth.Subject;
-import sublimedisruptors.quoridor.Locatable;
+import sublimedisruptors.quoridor.board.Locatable;
 
 /** Test utilities for Quoridor. */
 public final class TestUtils {

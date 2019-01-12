@@ -1,4 +1,4 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 import java.util.function.IntUnaryOperator;
 import java.util.function.UnaryOperator;

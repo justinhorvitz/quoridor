@@ -1,52 +1,4 @@
 java_test(
-    name = "BoardTest",
-    srcs = ["BoardTest.java"],
-    deps = [
-        "//deps:truth",
-        "//java/sublimedisruptors/quoridor",
-    ],
-)
-
-java_test(
-    name = "DirectionTest",
-    srcs = ["DirectionTest.java"],
-    deps = [
-        "//deps:truth",
-        "//java/sublimedisruptors/quoridor",
-    ],
-)
-
-java_test(
-    name = "GrooveTest",
-    srcs = ["GrooveTest.java"],
-    deps = [
-        "//deps:truth",
-        "//java/sublimedisruptors/quoridor",
-        "//java/sublimedisruptors/quoridor/testing",
-    ],
-)
-
-java_test(
-    name = "MoveTest",
-    srcs = ["MoveTest.java"],
-    deps = [
-        "//deps:truth",
-        "//java/sublimedisruptors/quoridor",
-        "//java/sublimedisruptors/quoridor/testing",
-    ],
-)
-
-java_test(
-    name = "MoveGeneratorTest",
-    srcs = ["MoveGeneratorTest.java"],
-    deps = [
-        "//deps:truth",
-        "//java/sublimedisruptors/quoridor",
-        "//java/sublimedisruptors/quoridor/testing",
-    ],
-)
-
-java_test(
     name = "QuoridorSettingsTest",
     srcs = ["QuoridorSettingsTest.java"],
     deps = [
@@ -54,33 +6,5 @@ java_test(
         "//deps:truth",
         "//java/sublimedisruptors/quoridor",
         "//java/sublimedisruptors/quoridor/testing",
-    ],
-)
-
-java_test(
-    name = "SquareTest",
-    srcs = ["SquareTest.java"],
-    deps = [
-        "//deps:truth",
-        "//java/sublimedisruptors/quoridor",
-        "//java/sublimedisruptors/quoridor/testing",
-    ],
-)
-
-java_test(
-    name = "VertexTest",
-    srcs = ["VertexTest.java"],
-    deps = [
-        "//java/sublimedisruptors/quoridor",
-        "//java/sublimedisruptors/quoridor/testing",
-    ],
-)
-
-java_test(
-    name = "WallTest",
-    srcs = ["WallTest.java"],
-    deps = [
-        "//deps:truth",
-        "//java/sublimedisruptors/quoridor",
     ],
 )

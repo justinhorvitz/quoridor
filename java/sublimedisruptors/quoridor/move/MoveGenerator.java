@@ -1,4 +1,4 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.move;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
@@ -9,6 +9,12 @@ import com.google.common.collect.Range;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import sublimedisruptors.quoridor.Player;
+import sublimedisruptors.quoridor.QuoridorSettings;
+import sublimedisruptors.quoridor.board.Board;
+import sublimedisruptors.quoridor.board.Direction;
+import sublimedisruptors.quoridor.board.Groove;
+import sublimedisruptors.quoridor.board.Square;
 
 /** Responsible for generating valid moves according to the rules of Quoridor. */
 public final class MoveGenerator {

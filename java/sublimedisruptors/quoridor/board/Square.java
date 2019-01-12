@@ -1,9 +1,9 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.auto.value.AutoValue;
-import sublimedisruptors.quoridor.Groove.Orientation;
+import sublimedisruptors.quoridor.board.Groove.Orientation;
 
 /**
  * An individual square on the board.

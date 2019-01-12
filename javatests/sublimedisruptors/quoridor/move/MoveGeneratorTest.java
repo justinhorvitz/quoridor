@@ -1,4 +1,4 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.move;
 
 import static com.google.common.truth.Truth.assertThat;
 import static sublimedisruptors.quoridor.testing.TestUtils.assertThrows;
@@ -7,6 +7,12 @@ import java.util.Set;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import sublimedisruptors.quoridor.Player;
+import sublimedisruptors.quoridor.QuoridorSettings;
+import sublimedisruptors.quoridor.board.Board;
+import sublimedisruptors.quoridor.board.Groove;
+import sublimedisruptors.quoridor.board.Square;
+import sublimedisruptors.quoridor.board.Wall;
 
 /** Tests for {@link MoveGenerator}. */
 @RunWith(JUnit4.class)

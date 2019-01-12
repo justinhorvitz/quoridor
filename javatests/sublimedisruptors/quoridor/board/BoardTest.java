@@ -1,16 +1,19 @@
-package sublimedisruptors.quoridor;
+package sublimedisruptors.quoridor.board;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import sublimedisruptors.quoridor.Player;
+import sublimedisruptors.quoridor.QuoridorSettings;
+import sublimedisruptors.quoridor.QuoridorSettings.Builder;
 
 /** Tests for {@link Board}. */
 @RunWith(JUnit4.class)
 public final class BoardTest {
 
-  private final QuoridorSettings.Builder settings = QuoridorSettings.defaultTwoPlayer().toBuilder();
+  private final Builder settings = QuoridorSettings.defaultTwoPlayer().toBuilder();
 
   @Test
   public void createFromSettings_size() {
