@@ -19,8 +19,11 @@ import sublimedisruptors.quoridor.board.Square;
 /** Responsible for generating valid moves according to the rules of Quoridor. */
 public final class MoveGenerator {
 
-  public static MoveGenerator create(Board board, QuoridorSettings settings) {
-    return new MoveGenerator(checkNotNull(board), settings.wallSize());
+  /** Creates a {@code MoveGenerator} and sets up pawns in their initial positions. */
+  public static MoveGenerator createAndSetUpPawns(Board board, QuoridorSettings settings) {
+    MoveGenerator moveGenerator = new MoveGenerator(checkNotNull(board), settings.wallSize());
+    settings.players().forEach(moveGenerator::placePawnInInitialSquare);
+    return moveGenerator;
   }
 
   private final Board board;
@@ -43,7 +46,7 @@ public final class MoveGenerator {
         continue;
       }
       Square adjacentSquare = currentSquare.adjacentSquare(direction);
-      if (!isInBounds(adjacentSquare, board)) {
+      if (!isInBounds(adjacentSquare)) {
         continue;
       }
       if (!pawns.containsValue(adjacentSquare)) {
@@ -53,7 +56,7 @@ public final class MoveGenerator {
       // An adjacent square is occupied by a pawn. Check whether that pawn can be jumped.
       if (!walledOffGrooves.contains(adjacentSquare.borderingGroove(direction))) {
         Square jump = adjacentSquare.adjacentSquare(direction);
-        if (isInBounds(jump, board) && !pawns.containsValue(jump)) {
+        if (isInBounds(jump) && !pawns.containsValue(jump)) {
           moves.add(Move.pawnMove(player, jump));
           continue;
         }
@@ -68,7 +71,7 @@ public final class MoveGenerator {
           continue;
         }
         Square diagonalSquare = adjacentSquare.adjacentSquare(orthogonal);
-        if (isInBounds(diagonalSquare, board) && !pawns.containsValue(diagonalSquare)) {
+        if (isInBounds(diagonalSquare) && !pawns.containsValue(diagonalSquare)) {
           moves.add(Move.pawnMove(player, diagonalSquare));
         }
       }
@@ -76,8 +79,54 @@ public final class MoveGenerator {
     return moves.build();
   }
 
-  private static boolean isInBounds(Square square, Board board) {
-    return Range.closed('a', (char) ('a' + board.size() - 1)).contains(square.column())
-        && Range.closed(1, board.size()).contains(square.row());
+  private void placePawnInInitialSquare(Player player) {
+    Square initialSquare;
+    switch (player) {
+      case PLAYER1:
+        initialSquare = Square.at(middleColumn(), bottomRow());
+        break;
+      case PLAYER2:
+        initialSquare = Square.at(middleColumn(), topRow());
+        break;
+      case PLAYER3:
+        initialSquare = Square.at(firstColumn(), middleRow());
+        break;
+      case PLAYER4:
+        initialSquare = Square.at(lastColumn(), middleRow());
+        break;
+      default:
+        throw new IllegalStateException("Unknown player: " + player);
+    }
+    board.movePawn(player, initialSquare);
+  }
+
+  private boolean isInBounds(Square square) {
+    return Range.closed(firstColumn(), lastColumn()).contains(square.column())
+        && Range.closed(topRow(), bottomRow()).contains(square.row());
+  }
+
+  private char firstColumn() {
+    return 'a';
+  }
+
+  private char middleColumn() {
+    return (char) (firstColumn() + board.size() / 2);
+  }
+
+  private char lastColumn() {
+    return (char) (firstColumn() + board.size() - 1);
+  }
+
+  private int topRow() {
+    return 1;
+  }
+
+  private int middleRow() {
+    return topRow() + board.size() / 2;
+  }
+
+  private int bottomRow() {
+    return board.size();
   }
 }
+
