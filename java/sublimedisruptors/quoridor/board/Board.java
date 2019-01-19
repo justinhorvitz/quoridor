@@ -6,6 +6,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -33,19 +34,51 @@ public final class Board {
   public static Board createFromSettings(QuoridorSettings settings) {
     Map<Player, Integer> wallsAvailable = new EnumMap<>(Player.class);
     settings.players().forEach(player -> wallsAvailable.put(player, settings.wallsPerPlayer()));
-    return new Board(settings.boardSize(), wallsAvailable);
+    return new Board(
+        settings.boardSize(),
+        /*pawns=*/ new EnumMap<>(Player.class),
+        wallsAvailable,
+        /*walledOffGrooves=*/ new HashSet<>(),
+        /*walledOffVertices=*/ new HashSet<>(),
+        /*currentSnapshot=*/ null);
+  }
+
+  /**
+   * Creates a board in the same state as the given {@code snapshot}.
+   *
+   * <p>This method provides a way to obtain a deep copy of a board, such that future mutations to
+   * one board will not be reflected in the other.
+   */
+  public static Board fromSnapshot(Snapshot snapshot) {
+    return new Board(
+        snapshot.size(),
+        new EnumMap<>(snapshot.pawns()),
+        new HashMap<>(snapshot.wallsAvailable()),
+        new HashSet<>(snapshot.walledOffGrooves()),
+        new HashSet<>(snapshot.walledOffVertices()),
+        snapshot);
   }
 
   private final int size;
+  private final Map<Player, Square> pawns;
   private final Map<Player, Integer> wallsAvailable;
-  private final Map<Player, Square> pawns = new EnumMap<>(Player.class);
-  private final Set<Groove> walledOffGrooves = new HashSet<>();
-  private final Set<Vertex> walledOffVertices = new HashSet<>();
+  private final Set<Groove> walledOffGrooves;
+  private final Set<Vertex> walledOffVertices;
   @Nullable private Snapshot currentSnapshot;
 
-  private Board(int size, Map<Player, Integer> wallsAvailable) {
+  private Board(
+      int size,
+      Map<Player, Square> pawns,
+      Map<Player, Integer> wallsAvailable,
+      Set<Groove> walledOffGrooves,
+      Set<Vertex> walledOffVertices,
+      @Nullable Snapshot currentSnapshot) {
     this.size = size;
+    this.pawns = pawns;
     this.wallsAvailable = wallsAvailable;
+    this.walledOffGrooves = walledOffGrooves;
+    this.walledOffVertices = walledOffVertices;
+    this.currentSnapshot = currentSnapshot;
   }
 
   /** Returns the number of rows and columns on this board. */
@@ -53,20 +86,19 @@ public final class Board {
     return size;
   }
 
+  /** Returns an immutable {@link Snapshot} of the board's current state. */
   public Snapshot snapshot() {
-    if (currentSnapshot != null) {
-      return currentSnapshot;
+    if (currentSnapshot == null) {
+      currentSnapshot =
+          new AutoValue_Board_Snapshot.Builder()
+              .setSize(size)
+              .setPawns(pawns)
+              .setWallsAvailable(wallsAvailable)
+              .setWalledOffGrooves(walledOffGrooves)
+              .setWalledOffVertices(walledOffVertices)
+              .build();
     }
-    Snapshot snapshot =
-        new AutoValue_Board_Snapshot.Builder()
-            .setSize(size)
-            .setPawns(pawns)
-            .setWallsAvailable(wallsAvailable)
-            .setWalledOffGrooves(walledOffGrooves)
-            .setWalledOffVertices(walledOffVertices)
-            .build();
-    currentSnapshot = snapshot;
-    return snapshot;
+    return currentSnapshot;
   }
 
   /**
