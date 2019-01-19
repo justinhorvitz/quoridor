@@ -14,6 +14,11 @@ maven_jar(
 )
 
 maven_jar(
+    name = "jsr305",
+    artifact = "com.google.code.findbugs:jsr305:3.0.2",
+)
+
+maven_jar(
     name = "truth",
     artifact = "com.google.truth:truth:0.42",
 )

@@ -34,11 +34,18 @@ public final class MoveGenerator {
     this.wallSize = wallSize;
   }
 
+  /**
+   * Generates the set of all valid {@linkplain Move.Type#PAWN pawn moves} that the given {@code
+   * player} can legally make.
+   *
+   * <p>{@code player} must be participating in the game (has a pawn on the board).
+   */
   public ImmutableSet<Move> generateValidPawnMoves(Player player) {
-    Map<Player, Square> pawns = board.getPawns();
+    Board.Snapshot snapshot = board.snapshot();
+    Map<Player, Square> pawns = snapshot.pawns();
     Square currentSquare = pawns.get(player);
     checkState(currentSquare != null, "%s has no pawn on the board", player);
-    Set<Groove> walledOffGrooves = board.getWalledOffGrooves();
+    Set<Groove> walledOffGrooves = snapshot.walledOffGrooves();
 
     ImmutableSet.Builder<Move> moves = ImmutableSet.builder();
     for (Direction direction : Direction.values()) {

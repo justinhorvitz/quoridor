@@ -34,7 +34,7 @@ public final class MoveGeneratorTest {
      *                 a   b   c
      */
     setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
-    assertThat(board.getPawns())
+    assertThat(board.snapshot().pawns())
         .containsExactly(Player.PLAYER2, Square.at('b', 1), Player.PLAYER1, Square.at('b', 3));
   }
 
@@ -64,7 +64,7 @@ public final class MoveGeneratorTest {
      *                 a   b   c   d   e   f   g   h   i
      */
     setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(9));
-    assertThat(board.getPawns())
+    assertThat(board.snapshot().pawns())
         .containsExactly(Player.PLAYER2, Square.at('e', 1), Player.PLAYER1, Square.at('e', 9));
   }
 
@@ -82,7 +82,7 @@ public final class MoveGeneratorTest {
      *                 a   b   c
      */
     setUpBoard(QuoridorSettings.defaultFourPlayer().toBuilder().setBoardSize(3));
-    assertThat(board.getPawns())
+    assertThat(board.snapshot().pawns())
         .containsExactly(
             Player.PLAYER2, Square.at('b', 1),
             Player.PLAYER3, Square.at('a', 2),
@@ -116,7 +116,7 @@ public final class MoveGeneratorTest {
      *                 a   b   c   d   e   f   g   h   i
      */
     setUpBoard(QuoridorSettings.defaultFourPlayer().toBuilder().setBoardSize(9));
-    assertThat(board.getPawns())
+    assertThat(board.snapshot().pawns())
         .containsExactly(
             Player.PLAYER2, Square.at('e', 1),
             Player.PLAYER3, Square.at('a', 5),

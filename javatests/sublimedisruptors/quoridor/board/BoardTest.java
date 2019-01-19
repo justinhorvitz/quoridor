@@ -26,22 +26,24 @@ public final class BoardTest {
   public void createFromSettings_wallsAvailable() {
     settings.setPlayers(Player.PLAYER1, Player.PLAYER2).setWallsPerPlayer(7);
     Board board = Board.createFromSettings(settings.build());
-    assertThat(board.getWallsAvailable()).containsExactly(Player.PLAYER1, 7, Player.PLAYER2, 7);
+    Board.Snapshot snapshot = board.snapshot();
+    assertThat(snapshot.wallsAvailable()).containsExactly(Player.PLAYER1, 7, Player.PLAYER2, 7);
   }
 
   @Test
   public void boardInitiallyEmpty() {
     Board board = Board.createFromSettings(settings.build());
-    assertThat(board.getPawns()).isEmpty();
-    assertThat(board.getWalledOffGrooves()).isEmpty();
-    assertThat(board.getWalledOffVertices()).isEmpty();
+    Board.Snapshot snapshot = board.snapshot();
+    assertThat(snapshot.pawns()).isEmpty();
+    assertThat(snapshot.walledOffGrooves()).isEmpty();
+    assertThat(snapshot.walledOffVertices()).isEmpty();
   }
 
   @Test
   public void movePawn_notPreviouslyOnBoard() {
     Board board = Board.createFromSettings(settings.build());
     board.movePawn(Player.PLAYER2, Square.at('e', 1));
-    assertThat(board.getPawns()).containsExactly(Player.PLAYER2, Square.at('e', 1));
+    assertThat(board.snapshot().pawns()).containsExactly(Player.PLAYER2, Square.at('e', 1));
   }
 
   @Test
@@ -50,7 +52,7 @@ public final class BoardTest {
     board.movePawn(Player.PLAYER2, Square.at('e', 1));
     board.movePawn(Player.PLAYER1, Square.at('e', 9));
     board.movePawn(Player.PLAYER1, Square.at('e', 8));
-    assertThat(board.getPawns())
+    assertThat(board.snapshot().pawns())
         .containsExactly(Player.PLAYER1, Square.at('e', 8), Player.PLAYER2, Square.at('e', 1));
   }
 
@@ -60,8 +62,9 @@ public final class BoardTest {
     Board board = Board.createFromSettings(settings.build());
     Wall wall = Wall.vertical('a', 1).withLength(3);
     board.placeWall(wall, Player.PLAYER1);
-    assertThat(board.getWalledOffGrooves()).containsExactlyElementsIn(wall.coveredGrooves());
-    assertThat(board.getWalledOffVertices()).containsExactlyElementsIn(wall.coveredVertices());
-    assertThat(board.getWallsAvailable()).containsExactly(Player.PLAYER1, 1, Player.PLAYER2, 2);
+    Board.Snapshot snapshot = board.snapshot();
+    assertThat(snapshot.walledOffGrooves()).containsExactlyElementsIn(wall.coveredGrooves());
+    assertThat(snapshot.walledOffVertices()).containsExactlyElementsIn(wall.coveredVertices());
+    assertThat(snapshot.wallsAvailable()).containsExactly(Player.PLAYER1, 1, Player.PLAYER2, 2);
   }
 }

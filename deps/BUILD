@@ -17,21 +17,27 @@ java_library(
         ":auto_value_plugin",
     ],
     neverlink = 1,
-    exports = ["@auto_value//jar"],
     visibility = ["//visibility:public"],
+    exports = ["@auto_value//jar"],
 )
 
 java_library(
     name = "guava",
-    exports = ["@guava//jar"],
     visibility = ["//visibility:public"],
+    exports = ["@guava//jar"],
+)
+
+java_library(
+    name = "jsr305",
+    visibility = ["//visibility:public"],
+    exports = ["@jsr305//jar"],
 )
 
 java_library(
     name = "truth",
-    exports = [
-        "@truth//jar",
-        "@diff_utils//jar",
-    ],
     visibility = ["//visibility:public"],
+    exports = [
+        "@diff_utils//jar",
+        "@truth//jar",
+    ],
 )

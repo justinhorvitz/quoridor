@@ -6,6 +6,7 @@ java_library(
     deps = [
         "//deps:auto_value",
         "//deps:guava",
+        "//deps:jsr305",
         "//java/sublimedisruptors/quoridor",
     ],
 )
