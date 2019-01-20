@@ -343,8 +343,7 @@ public final class RulesGovernorTest {
   public void generateValidPawnMoves_noPawnOnBoard_throws() {
     setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(9));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
-    assertThrows(
-        IllegalStateException.class, () -> governor.generateValidPawnMoves(Player.PLAYER3));
+    assertThrows(() -> governor.generateValidPawnMoves(Player.PLAYER3));
   }
 
   @Test
@@ -462,13 +461,13 @@ public final class RulesGovernorTest {
   @Test
   public void isGoal_nullPlayer_throws() {
     setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(9));
-    assertThrows(RuntimeException.class, () -> governor.isGoal(null, Square.at('b', 2)));
+    assertThrows(() -> governor.isGoal(null, Square.at('b', 2)));
   }
 
   @Test
   public void isGoal_nullSquare_throws() {
     setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(9));
-    assertThrows(RuntimeException.class, () -> governor.isGoal(Player.PLAYER1, null));
+    assertThrows(() -> governor.isGoal(Player.PLAYER1, null));
   }
 
   private void setUpBoard(QuoridorSettings.Builder settingsBuilder) {

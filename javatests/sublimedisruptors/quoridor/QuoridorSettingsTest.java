@@ -39,36 +39,36 @@ public final class QuoridorSettingsTest {
   @Test
   public void boardSizeTooSmall_invalid() {
     customSettings.setBoardSize(1);
-    assertThrows(IllegalStateException.class, customSettings::build);
+    assertThrows(customSettings::build);
   }
 
   @Test
   public void boardSizeEven_invalid() {
     customSettings.setBoardSize(8);
-    assertThrows(IllegalStateException.class, customSettings::build);
+    assertThrows(customSettings::build);
   }
 
   @Test
   public void tooFewPlayers_invalid() {
     customSettings.setPlayers(Player.PLAYER1);
-    assertThrows(IllegalStateException.class, customSettings::build);
+    assertThrows(customSettings::build);
   }
 
   @Test
   public void duplicatePlayer_invalid() {
     customSettings.setPlayers(Player.PLAYER1, Player.PLAYER2, Player.PLAYER2);
-    assertThrows(IllegalStateException.class, customSettings::build);
+    assertThrows(customSettings::build);
   }
 
   @Test
   public void negativeWallsPerPlayer_invalid() {
     customSettings.setWallsPerPlayer(-1);
-    assertThrows(IllegalStateException.class, customSettings::build);
+    assertThrows(customSettings::build);
   }
 
   @Test
   public void wallSizeZero_invalid() {
     customSettings.setWallSize(0);
-    assertThrows(IllegalStateException.class, customSettings::build);
+    assertThrows(customSettings::build);
   }
 }

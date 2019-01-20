@@ -48,7 +48,7 @@ public final class SquareTest {
   @Test
   public void borderingGroove_null_throws() {
     Square square = Square.at('c', 3);
-    assertThrows(RuntimeException.class, () -> square.borderingGroove(null));
+    assertThrows(() -> square.borderingGroove(null));
   }
 
   @Test
@@ -82,6 +82,6 @@ public final class SquareTest {
   @Test
   public void adjacentSquare_null_throws() {
     Square square = Square.at('c', 3);
-    assertThrows(RuntimeException.class, () -> square.adjacentSquare(null));
+    assertThrows(() -> square.adjacentSquare(null));
   }
 }

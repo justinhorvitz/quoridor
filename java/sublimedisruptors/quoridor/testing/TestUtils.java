@@ -1,26 +1,15 @@
 package sublimedisruptors.quoridor.testing;
 
-import com.google.common.truth.Subject;
-import sublimedisruptors.quoridor.board.Locatable;
-
 /** Test utilities for Quoridor. */
 public final class TestUtils {
 
-  public static void assertThrows(Class<? extends RuntimeException> expected, Runnable runnable) {
+  /** Asserts that {@code runnable} throws a {@link RuntimeException}. */
+  public static void assertThrows(Runnable runnable) {
     try {
       runnable.run();
-      throw new AssertionError(String.format("no %s thrown", expected.getName()));
+      throw new AssertionError(String.format("no exception thrown"));
     } catch (RuntimeException e) {
-      if (!expected.isInstance(e)) {
-        throw e;
-      }
-    }
-  }
-
-  public static final class LocatableSubject extends Subject<LocatableSubject, Locatable> {
-
-    protected LocatableSubject(Locatable actual) {
-      super(null, actual);
+      // Expected.
     }
   }
 

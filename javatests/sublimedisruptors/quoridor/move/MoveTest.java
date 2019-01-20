@@ -21,7 +21,7 @@ public final class MoveTest {
     assertThat(pawnMove.player()).isEqualTo(Player.PLAYER1);
     assertThat(pawnMove.type()).isEqualTo(Move.Type.PAWN);
     assertThat(pawnMove.destination()).isEqualTo(destination);
-    assertThrows(UnsupportedOperationException.class, pawnMove::wall);
+    assertThrows(pawnMove::wall);
   }
 
   @Test
@@ -31,6 +31,6 @@ public final class MoveTest {
     assertThat(wallMove.player()).isEqualTo(Player.PLAYER1);
     assertThat(wallMove.type()).isEqualTo(Move.Type.WALL);
     assertThat(wallMove.wall()).isEqualTo(wall);
-    assertThrows(UnsupportedOperationException.class, wallMove::destination);
+    assertThrows(wallMove::destination);
   }
 }
