@@ -1,5 +1,6 @@
 java_test(
     name = "MoveTest",
+    size = "small",
     srcs = ["MoveTest.java"],
     deps = [
         "//deps:truth",
@@ -12,6 +13,7 @@ java_test(
 
 java_test(
     name = "RulesGovernorTest",
+    size = "small",
     srcs = ["RulesGovernorTest.java"],
     deps = [
         "//deps:truth",

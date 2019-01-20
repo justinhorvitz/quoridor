@@ -1,5 +1,6 @@
 java_test(
     name = "QuoridorSettingsTest",
+    size = "small",
     srcs = ["QuoridorSettingsTest.java"],
     deps = [
         "//deps:guava",
