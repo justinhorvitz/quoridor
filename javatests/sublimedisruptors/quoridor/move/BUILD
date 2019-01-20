@@ -11,8 +11,8 @@ java_test(
 )
 
 java_test(
-    name = "MoveGeneratorTest",
-    srcs = ["MoveGeneratorTest.java"],
+    name = "RulesGovernorTest",
+    srcs = ["RulesGovernorTest.java"],
     deps = [
         "//deps:truth",
         "//java/sublimedisruptors/quoridor",

@@ -16,29 +16,27 @@ import sublimedisruptors.quoridor.board.Direction;
 import sublimedisruptors.quoridor.board.Groove;
 import sublimedisruptors.quoridor.board.Square;
 
-/** Responsible for generating valid moves according to the rules of Quoridor. */
-public final class MoveGenerator {
+/** Governs the game according to the rules of Quoridor. */
+public final class RulesGovernor {
 
-  /** Creates a {@code MoveGenerator} and sets up pawns in their initial positions. */
-  public static MoveGenerator createAndSetUpPawns(Board board, QuoridorSettings settings) {
-    MoveGenerator moveGenerator = new MoveGenerator(checkNotNull(board), settings.wallSize());
-    settings.players().forEach(moveGenerator::placePawnInInitialSquare);
-    return moveGenerator;
+  /** Creates a {@code RulesGovernor} and sets up pawns in their initial positions. */
+  public static RulesGovernor createAndSetUpPawns(Board board, QuoridorSettings settings) {
+    RulesGovernor rulesGovernor = new RulesGovernor(checkNotNull(board));
+    settings.players().forEach(rulesGovernor::placePawnInInitialSquare);
+    return rulesGovernor;
   }
 
   private final Board board;
-  private final int wallSize;
 
-  private MoveGenerator(Board board, int wallSize) {
+  private RulesGovernor(Board board) {
     this.board = board;
-    this.wallSize = wallSize;
   }
 
   /**
    * Generates the set of all valid {@linkplain Move.Type#PAWN pawn moves} that the given {@code
    * player} can legally make.
    *
-   * <p>{@code player} must be participating in the game (has a pawn on the board).
+   * <p>{@code player} must be participating in the game (i.e. has a pawn on the board).
    */
   public ImmutableSet<Move> generateValidPawnMoves(Player player) {
     Board.Snapshot snapshot = board.snapshot();
@@ -84,6 +82,20 @@ public final class MoveGenerator {
       }
     }
     return moves.build();
+  }
+
+  public boolean isGoal(Player player, Square square) {
+    switch (player) {
+      case PLAYER1:
+        return square.row() == topRow();
+      case PLAYER2:
+        return square.row() == bottomRow();
+      case PLAYER3:
+        return square.column() == lastColumn();
+      case PLAYER4:
+        return square.column() == firstColumn();
+    }
+    throw new IllegalArgumentException("Unknown player: " + player);
   }
 
   private void placePawnInInitialSquare(Player player) {
