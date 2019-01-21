@@ -137,7 +137,7 @@ public final class RulesGovernorTest {
      *               -------------
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('b', 2));
     Set<Move> moves = governor.generateValidPawnMoves(Player.PLAYER1);
@@ -162,7 +162,7 @@ public final class RulesGovernorTest {
      *               -------------
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('c', 2));
     Set<Move> moves = governor.generateValidPawnMoves(Player.PLAYER1);
@@ -186,7 +186,7 @@ public final class RulesGovernorTest {
      *               -------------
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
     Set<Move> moves = governor.generateValidPawnMoves(Player.PLAYER1);
@@ -209,7 +209,7 @@ public final class RulesGovernorTest {
      *               -------------
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('c', 2));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
     Set<Move> moves = governor.generateValidPawnMoves(Player.PLAYER1);
@@ -232,7 +232,7 @@ public final class RulesGovernorTest {
      *               -------------
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
     board.placeWall(Wall.horizontal('c', 2).withLength(1), Player.PLAYER2);
@@ -253,7 +253,7 @@ public final class RulesGovernorTest {
      *               --------+----
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('a', 1));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
     board.placeWall(Wall.vertical('b', 3).withLength(1), Player.PLAYER2);
@@ -274,7 +274,7 @@ public final class RulesGovernorTest {
      *               -------------
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('b', 2));
     board.movePawn(Player.PLAYER1, Square.at('b', 3));
     board.placeWall(Wall.horizontal('b', 1).withLength(1), Player.PLAYER2);
@@ -300,7 +300,7 @@ public final class RulesGovernorTest {
      *               -------------
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('a', 2));
     board.movePawn(Player.PLAYER1, Square.at('b', 2));
     Set<Move> moves = governor.generateValidPawnMoves(Player.PLAYER1);
@@ -326,7 +326,7 @@ public final class RulesGovernorTest {
      *               -------------
      *                 a   b   c
      */
-    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallSize(1));
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
     board.movePawn(Player.PLAYER2, Square.at('a', 2));
     board.movePawn(Player.PLAYER1, Square.at('b', 2));
     board.placeWall(Wall.horizontal('a', 1).withLength(1), Player.PLAYER2);
@@ -344,6 +344,219 @@ public final class RulesGovernorTest {
     setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(9));
     board.movePawn(Player.PLAYER1, Square.at('c', 3));
     assertThrows(() -> governor.generateValidPawnMoves(Player.PLAYER3));
+  }
+
+  @Test
+  public void isValidWallMove_firstWallOnBoard_valid() {
+    /*
+     *                 a   b   c
+     *               -------------
+     *             1 |   | 2 |   |
+     *               -------------
+     *             2 |   |   |   |
+     *               --------+++++
+     *             3 |   | 1 |   |
+     *               -------------
+     *                 a   b   c
+     */
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    board.movePawn(Player.PLAYER2, Square.at('b', 1));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER1, Wall.horizontal('c', 2).withLength(1)));
+    assertThat(valid).isTrue();
+  }
+
+  @Test
+  public void isValidWallMove_sameAlreadyPresent_invalid() {
+    /*
+     *                 a   b   c
+     *               -------------
+     *             1 |   | 2 |   |
+     *               -------------
+     *             2 |   |   |   |
+     *               --------+++++
+     *             3 |   | 1 |   |
+     *               -------------
+     *                 a   b   c
+     */
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    board.movePawn(Player.PLAYER2, Square.at('b', 1));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
+    board.placeWall(Wall.horizontal('c', 2).withLength(1), Player.PLAYER1);
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER2, Wall.horizontal('c', 2).withLength(1)));
+    assertThat(valid).isFalse();
+  }
+
+  @Test
+  public void isValidWallMove_overlappingGroove_invalid() {
+    /*
+     *                 a   b   c
+     *               --------+----
+     *             1 |   | 2 +   |
+     *               --------+----
+     *             2 |   |   +   |
+     *               --------+----
+     *             3 |   | 1 +   |
+     *               --------+----
+     *                 a   b   c
+     */
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    board.movePawn(Player.PLAYER2, Square.at('b', 1));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
+    board.placeWall(Wall.vertical('b', 1).withLength(2), Player.PLAYER1);
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER2, Wall.vertical('b', 2).withLength(2)));
+    assertThat(valid).isFalse();
+  }
+
+  @Test
+  public void isValidWallMove_overlappingVertex_invalid() {
+    /*
+     *                 a   b   c
+     *               -------------
+     *             1 |   | 2 |   |
+     *               --------+----
+     *             2 |   |   +   |
+     *               ----+++++++++
+     *             3 |   | 1 +   |
+     *               --------+----
+     *                 a   b   c
+     */
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    board.movePawn(Player.PLAYER2, Square.at('b', 1));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
+    board.placeWall(Wall.horizontal('b', 2).withLength(2), Player.PLAYER1);
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER2, Wall.vertical('b', 2).withLength(2)));
+    assertThat(valid).isFalse();
+  }
+
+  @Test
+  public void isValidWallMove_adjacentToExistingWall_valid() {
+    /*
+     *                 a   b   c
+     *               -------------
+     *             1 |   | 2 |   |
+     *               -------------
+     *             2 |   |   |   |
+     *               ----+++++++++
+     *             3 |   | 1 |   |
+     *               -------------
+     *                 a   b   c
+     */
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    board.movePawn(Player.PLAYER2, Square.at('b', 1));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
+    board.placeWall(Wall.horizontal('c', 2).withLength(1), Player.PLAYER1);
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER2, Wall.vertical('b', 2).withLength(1)));
+    assertThat(valid).isTrue();
+  }
+
+  @Test
+  public void isValidWallMove_orthogonalToExistingWallButNoOverlap_valid() {
+    /*
+     *                 a   b   c
+     *               ----+--------
+     *             1 |   +   |   |
+     *               ----+--------
+     *             2 | 2 +   |   |
+     *               ----+++++++++
+     *             3 |   | 1 |   |
+     *               -------------
+     *                 a   b   c
+     */
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    board.movePawn(Player.PLAYER2, Square.at('a', 2));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
+    board.placeWall(Wall.horizontal('b', 2).withLength(2), Player.PLAYER1);
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER2, Wall.vertical('a', 1).withLength(2)));
+    assertThat(valid).isTrue();
+  }
+
+  @Test
+  public void isValidWallMove_outOfWalls_invalid() {
+    /*
+     *                 a   b   c
+     *               -------------
+     *             1 |   | 2 |   |
+     *               -------------
+     *             2 |   |   |   |
+     *               --------+++++
+     *             3 |   | 1 |   |
+     *               -------------
+     *                 a   b   c
+     */
+    setUpBoard(
+        QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3).setWallsPerPlayer(1));
+    board.movePawn(Player.PLAYER2, Square.at('b', 1));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
+    board.placeWall(Wall.horizontal('c', 2).withLength(1), Player.PLAYER1);
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER1, Wall.vertical('a', 1).withLength(1)));
+    assertThat(valid).isFalse();
+  }
+
+  @Test
+  public void isValidWallMove_blocksOpponentFromPathToGoal_invalid() {
+    /*
+     *                 a   b   c
+     *               --------+----
+     *             1 |   |   + 2 |
+     *               --------+++++
+     *             2 |   |   |   |
+     *               -------------
+     *             3 |   | 1 |   |
+     *               -------------
+     *                 a   b   c
+     */
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    board.movePawn(Player.PLAYER2, Square.at('c', 1));
+    board.movePawn(Player.PLAYER1, Square.at('b', 3));
+    board.placeWall(Wall.horizontal('c', 1).withLength(1), Player.PLAYER1);
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER1, Wall.vertical('b', 1).withLength(1)));
+    assertThat(valid).isFalse();
+  }
+
+  @Test
+  public void isValidWallMove_blocksSelfFromPathToGoal_invalid() {
+    /*
+     *                 a   b   c
+     *               -------------
+     *             1 |   | 2 |   |
+     *               -------------
+     *             2 |   |   |   |
+     *               --------+++++
+     *             3 |   |   + 1 |
+     *               --------+----
+     *                 a   b   c
+     */
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    board.movePawn(Player.PLAYER2, Square.at('b', 1));
+    board.movePawn(Player.PLAYER1, Square.at('c', 3));
+    board.placeWall(Wall.horizontal('c', 2).withLength(1), Player.PLAYER1);
+    boolean valid =
+        governor.isValidWallMove(
+            Move.wallMove(Player.PLAYER1, Wall.vertical('b', 3).withLength(1)));
+    assertThat(valid).isFalse();
+  }
+
+  @Test
+  public void isValidWallMove_notWallMove_throws() {
+    setUpBoard(QuoridorSettings.defaultTwoPlayer().toBuilder().setBoardSize(3));
+    assertThrows(() -> governor.isValidWallMove(Move.pawnMove(Player.PLAYER1, Square.at('e', 2))));
   }
 
   @Test

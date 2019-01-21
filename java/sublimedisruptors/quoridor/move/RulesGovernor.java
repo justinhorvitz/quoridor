@@ -1,20 +1,25 @@
 package sublimedisruptors.quoridor.move;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Range;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import sublimedisruptors.quoridor.Player;
 import sublimedisruptors.quoridor.QuoridorSettings;
 import sublimedisruptors.quoridor.board.Board;
+import sublimedisruptors.quoridor.board.Board.Snapshot;
 import sublimedisruptors.quoridor.board.Direction;
 import sublimedisruptors.quoridor.board.Groove;
 import sublimedisruptors.quoridor.board.Square;
+import sublimedisruptors.quoridor.board.Wall;
+import sublimedisruptors.quoridor.move.Move.Type;
 
 /** Governs the game according to the rules of Quoridor. */
 public final class RulesGovernor {
@@ -84,6 +89,47 @@ public final class RulesGovernor {
     return moves.build();
   }
 
+  /**
+   * Determines whether {@code wallMove} is valid.
+   *
+   * <p>A wall move may be invalid for any of the following reasons:
+   *
+   * <ol>
+   *   <li>The player responsible for the move has no {@linkplain Snapshot#wallsAvailable} walls
+   *       available}.
+   *   <li>The wall overlaps groove(s) of a wall already on the board.
+   *   <li>The wall overlaps a vertex of a wall already on the board.
+   *   <li>The wall prevents one or more participants from possibly reaching their goal.
+   * </ol>
+   */
+  public boolean isValidWallMove(Move wallMove) {
+    checkArgument(wallMove.type() == Type.WALL, "%s not a wall move", wallMove);
+    Board.Snapshot snapshot = board.snapshot();
+    Integer wallsAvailable = snapshot.wallsAvailable().get(wallMove.player());
+    checkState(wallsAvailable != null, "%s not participating", wallMove.player());
+    if (wallsAvailable < 1) {
+      return false;
+    }
+    Wall wall = wallMove.wall();
+    if (!Collections.disjoint(snapshot.walledOffVertices(), wall.coveredVertices())
+        || !Collections.disjoint(snapshot.walledOffGrooves(), wall.coveredGrooves())) {
+      return false;
+    }
+    Board boardWithWall = Board.fromSnapshot(snapshot);
+    boardWithWall.placeWall(wall, wallMove.player());
+    for (Player player : snapshot.pawns().keySet()) {
+      if (!PathFinder.pathToGoalExists(player, boardWithWall, new RulesGovernor(boardWithWall))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Returns {@code true} if the given {@code player} wins the game by reaching {@code square}.
+   *
+   * <p>No validation is performed to ensure that {@code player} has a pawn on the board.
+   */
   public boolean isGoal(Player player, Square square) {
     switch (player) {
       case PLAYER1:
