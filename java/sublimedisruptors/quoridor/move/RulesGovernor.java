@@ -17,6 +17,8 @@ import sublimedisruptors.quoridor.board.Board;
 import sublimedisruptors.quoridor.board.Board.Snapshot;
 import sublimedisruptors.quoridor.board.Direction;
 import sublimedisruptors.quoridor.board.Groove;
+import sublimedisruptors.quoridor.board.Groove.Orientation;
+import sublimedisruptors.quoridor.board.Locatable;
 import sublimedisruptors.quoridor.board.Square;
 import sublimedisruptors.quoridor.board.Wall;
 import sublimedisruptors.quoridor.move.Move.Type;
@@ -97,6 +99,7 @@ public final class RulesGovernor {
    * <ol>
    *   <li>The player responsible for the move has no {@linkplain Snapshot#wallsAvailable} walls
    *       available}.
+   *   <li>The wall is on or extends past an edge of the board.
    *   <li>The wall overlaps groove(s) of a wall already on the board.
    *   <li>The wall overlaps a vertex of a wall already on the board.
    *   <li>The wall prevents one or more participants from possibly reaching their goal.
@@ -111,8 +114,15 @@ public final class RulesGovernor {
       return false;
     }
     Wall wall = wallMove.wall();
-    if (!Collections.disjoint(snapshot.walledOffVertices(), wall.coveredVertices())
-        || !Collections.disjoint(snapshot.walledOffGrooves(), wall.coveredGrooves())) {
+    for (Groove groove : wall.coveredGrooves()) {
+      if (!isInBounds(groove)
+          || (groove.orientation() == Orientation.VERTICAL && groove.column() == lastColumn())
+          || (groove.orientation() == Orientation.HORIZONTAL && groove.row() == bottomRow())
+          || snapshot.walledOffGrooves().contains(groove)) {
+        return false;
+      }
+    }
+    if (!Collections.disjoint(snapshot.walledOffVertices(), wall.coveredVertices())) {
       return false;
     }
     Board boardWithWall = Board.fromSnapshot(snapshot);
@@ -165,9 +175,9 @@ public final class RulesGovernor {
     board.movePawn(player, initialSquare);
   }
 
-  private boolean isInBounds(Square square) {
-    return Range.closed(firstColumn(), lastColumn()).contains(square.column())
-        && Range.closed(topRow(), bottomRow()).contains(square.row());
+  private boolean isInBounds(Locatable location) {
+    return Range.closed(firstColumn(), lastColumn()).contains(location.column())
+        && Range.closed(topRow(), bottomRow()).contains(location.row());
   }
 
   private char firstColumn() {
@@ -194,4 +204,3 @@ public final class RulesGovernor {
     return board.size();
   }
 }
-
