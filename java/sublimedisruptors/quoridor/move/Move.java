@@ -20,12 +20,12 @@ import sublimedisruptors.quoridor.board.Wall;
 public abstract class Move {
 
   /** Creates a move indicating that {@code player} is moving their pawn to {@code destination}. */
-  static Move pawnMove(Player player, Square destination) {
+  public static Move pawnMove(Player player, Square destination) {
     return new AutoValue_Move(player, AutoOneOf_Move_PawnOrWall.pawn(destination));
   }
 
   /** Creates a move indicating that {@code player} is placing {@code wall} on the board. */
-  static Move wallMove(Player player, Wall wall) {
+  public static Move wallMove(Player player, Wall wall) {
     return new AutoValue_Move(player, AutoOneOf_Move_PawnOrWall.wall(wall));
   }
 

@@ -15,7 +15,7 @@ public final class QuoridorSettingsTest {
       QuoridorSettings.builder()
           .setBoardSize(3)
           .setPlayers(Player.PLAYER1, Player.PLAYER2)
-          .setWallSize(2)
+          .setWallLength(2)
           .setWallsPerPlayer(1);
 
   @Test
@@ -67,8 +67,8 @@ public final class QuoridorSettingsTest {
   }
 
   @Test
-  public void wallSizeZero_invalid() {
-    customSettings.setWallSize(0);
+  public void wallLengthZero_invalid() {
+    customSettings.setWallLength(0);
     assertThrows(customSettings::build);
   }
 }

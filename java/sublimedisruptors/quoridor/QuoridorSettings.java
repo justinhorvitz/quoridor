@@ -39,7 +39,7 @@ public abstract class QuoridorSettings {
   }
 
   private static Builder builderWithCommonDefaults() {
-    return builder().setBoardSize(9).setWallSize(2);
+    return builder().setBoardSize(9).setWallLength(2);
   }
 
   public static Builder builder() {
@@ -63,10 +63,10 @@ public abstract class QuoridorSettings {
   public abstract int wallsPerPlayer();
 
   /**
-   * The size of each {@link sublimedisruptors.quoridor.board.Wall}, in terms of the number of
+   * The length of each {@link sublimedisruptors.quoridor.board.Wall}, in terms of the number of
    * {@linkplain sublimedisruptors.quoridor.board.Groove grooves} it covers.
    */
-  public abstract int wallSize();
+  public abstract int wallLength();
 
   /** Converts these settings to a {@link Builder} with the same settings. */
   public abstract Builder toBuilder();
@@ -99,11 +99,12 @@ public abstract class QuoridorSettings {
     public abstract Builder setWallsPerPlayer(int wallsPerPlayer);
 
     /**
-     * Sets the {@linkplain #wallSize size} of each {@link sublimedisruptors.quoridor.board.Wall}.
+     * Sets the {@linkplain #wallLength length} of each {@link
+     * sublimedisruptors.quoridor.board.Wall}.
      *
      * <p>This value must be at least 1.
      */
-    public abstract Builder setWallSize(int wallSize);
+    public abstract Builder setWallLength(int wallLength);
 
     /**
      * Builds the settings.
@@ -116,7 +117,7 @@ public abstract class QuoridorSettings {
       validateBoardSize(settings.boardSize());
       validatePlayers(settings.players());
       validateWallsPerPlayer(settings.wallsPerPlayer());
-      validateWallSize(settings.wallSize());
+      validateWallLength(settings.wallLength());
       return settings;
     }
 
@@ -137,8 +138,8 @@ public abstract class QuoridorSettings {
           wallsPerPlayer >= 0, "Walls per player must be non-negative, got %s", wallsPerPlayer);
     }
 
-    private static void validateWallSize(int wallSize) {
-      checkState(wallSize >= 1, "Wall size must be at least 1, got %s", wallSize);
+    private static void validateWallLength(int wallLength) {
+      checkState(wallLength >= 1, "Wall length must be at least 1, got %s", wallLength);
     }
 
     abstract QuoridorSettings autoBuild();

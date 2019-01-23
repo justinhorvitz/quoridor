@@ -28,15 +28,17 @@ public final class RulesGovernor {
 
   /** Creates a {@code RulesGovernor} and sets up pawns in their initial positions. */
   public static RulesGovernor createAndSetUpPawns(Board board, QuoridorSettings settings) {
-    RulesGovernor rulesGovernor = new RulesGovernor(checkNotNull(board));
+    RulesGovernor rulesGovernor = new RulesGovernor(checkNotNull(board), settings.wallLength());
     settings.players().forEach(rulesGovernor::placePawnInInitialSquare);
     return rulesGovernor;
   }
 
   private final Board board;
+  private final int wallLength;
 
-  private RulesGovernor(Board board) {
+  private RulesGovernor(Board board, int wallLength) {
     this.board = board;
+    this.wallLength = wallLength;
   }
 
   /**
@@ -107,13 +109,16 @@ public final class RulesGovernor {
    */
   public boolean isValidWallMove(Move wallMove) {
     checkArgument(wallMove.type() == Type.WALL, "%s not a wall move", wallMove);
+    Wall wall = wallMove.wall();
+    if (wall.length() != wallLength) {
+      return false;
+    }
     Board.Snapshot snapshot = board.snapshot();
     Integer wallsAvailable = snapshot.wallsAvailable().get(wallMove.player());
     checkState(wallsAvailable != null, "%s not participating", wallMove.player());
     if (wallsAvailable < 1) {
       return false;
     }
-    Wall wall = wallMove.wall();
     for (Groove groove : wall.coveredGrooves()) {
       if (!isInBounds(groove)
           || (groove.orientation() == Orientation.VERTICAL && groove.column() == lastColumn())
@@ -127,8 +132,9 @@ public final class RulesGovernor {
     }
     Board boardWithWall = Board.fromSnapshot(snapshot);
     boardWithWall.placeWall(wall, wallMove.player());
+    RulesGovernor governor = new RulesGovernor(boardWithWall, wallLength);
     for (Player player : snapshot.pawns().keySet()) {
-      if (!PathFinder.pathToGoalExists(player, boardWithWall, new RulesGovernor(boardWithWall))) {
+      if (!PathFinder.pathToGoalExists(player, boardWithWall, governor)) {
         return false;
       }
     }

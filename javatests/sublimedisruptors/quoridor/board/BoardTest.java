@@ -58,7 +58,7 @@ public final class BoardTest {
 
   @Test
   public void placeWall() {
-    settings.setPlayers(Player.PLAYER1, Player.PLAYER2).setWallsPerPlayer(2).setWallSize(3);
+    settings.setPlayers(Player.PLAYER1, Player.PLAYER2).setWallsPerPlayer(2).setWallLength(3);
     Board board = Board.createFromSettings(settings.build());
     Wall wall = Wall.vertical('a', 1).withLength(3);
     board.placeWall(wall, Player.PLAYER1);

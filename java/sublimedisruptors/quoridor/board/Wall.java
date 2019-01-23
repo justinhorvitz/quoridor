@@ -62,6 +62,10 @@ public abstract class Wall {
     return vertexStream().limit(length() - 1).collect(toImmutableList());
   }
 
+  public abstract int length();
+  abstract Vertex firstVertex();
+  abstract Orientation orientation();
+
   @AutoValue.Builder
   public abstract static class Builder {
 
@@ -76,10 +80,6 @@ public abstract class Wall {
     abstract Builder setLength(int length);
     abstract Wall build();
   }
-
-  abstract Vertex firstVertex();
-  abstract Orientation orientation();
-  abstract int length();
 
   private Stream<Vertex> vertexStream() {
     return Stream.iterate(firstVertex(), direction());
