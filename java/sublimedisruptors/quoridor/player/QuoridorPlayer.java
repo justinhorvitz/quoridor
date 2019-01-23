@@ -11,21 +11,20 @@ public interface QuoridorPlayer {
 
   /**
    * Informs this player that subsequent calls to {@link #getMove} will be in the context of a game
-   * with the given {@code settings}.
+   * with the given {@code settings} and that this player will be acting as {@code me}.
    */
-  void setUp(QuoridorSettings settings);
+  void setUp(QuoridorSettings settings, Player me);
 
   /**
    * Returns the {@link Move} that this player wishes to make.
    *
    * <p>This method is called when it is this player's turn. The current state of the game is given
-   * in the {@code board} parameter. {@code me} represents the {@link Player} that this player is
-   * playing as.
+   * in the {@code board} parameter.
    *
    * <p>It is the implementation's responsibility to return a legal move. For convenience (and
    * because it is relatively cheap to compute) the set of all valid {@linkplain Move.Type#PAWN pawn
    * moves} is provided. If the implementation wishes to make a {@linkplain Move.Type#WALL wall
    * move}, it is responsible for determining validity itself.
    */
-  Move getMove(Board.Snapshot board, Player me, ImmutableSet<Move> validPawnMoves);
+  Move getMove(Board.Snapshot board, ImmutableSet<Move> validPawnMoves);
 }
