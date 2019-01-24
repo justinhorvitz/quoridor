@@ -1,5 +1,6 @@
 package sublimedisruptors.quoridor.game;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
 import com.google.common.base.Predicate;
@@ -14,19 +15,32 @@ import sublimedisruptors.quoridor.board.Board;
 import sublimedisruptors.quoridor.board.Square;
 import sublimedisruptors.quoridor.move.Move;
 import sublimedisruptors.quoridor.move.RulesGovernor;
-import sublimedisruptors.quoridor.player.CommandLineQuoridorPlayer;
 import sublimedisruptors.quoridor.player.QuoridorPlayer;
-import sublimedisruptors.quoridor.player.RandomQuoridorPlayer;
 
 public final class GameMaster {
 
-  public static GameMaster createFromSettings(QuoridorSettings settings) {
+  public static GameMaster setUpGame(
+      QuoridorSettings settings, Map<Player, QuoridorPlayer.Factory> playerFactories) {
     Board board = Board.createFromSettings(settings);
+    return new GameMaster(
+        board,
+        RulesGovernor.createAndSetUpPawns(board, settings),
+        Iterators.cycle(settings.players()),
+        createPlayerImpls(playerFactories, settings));
+  }
+
+  private static Map<Player, QuoridorPlayer> createPlayerImpls(
+      Map<Player, QuoridorPlayer.Factory> playerFactories, QuoridorSettings settings) {
     Map<Player, QuoridorPlayer> playerImpls = new EnumMap<>(Player.class);
-    playerImpls.put(Player.PLAYER1, new CommandLineQuoridorPlayer());
-    playerImpls.put(Player.PLAYER2, new RandomQuoridorPlayer());
-    playerImpls.entrySet().forEach(entry -> entry.getValue().setUp(settings, entry.getKey()));
-    return new GameMaster(board, RulesGovernor.createAndSetUpPawns(board, settings), Iterators.cycle(settings.players()), playerImpls);
+    for (Player player : settings.players()) {
+      QuoridorPlayer.Factory factory =
+          checkNotNull(playerFactories.get(player), "No factory for %s", player);
+      QuoridorPlayer playerImpl =
+          checkNotNull(
+              factory.createPlayer(player, settings), "%s factory created a null player", player);
+      playerImpls.put(player, playerImpl);
+    }
+    return playerImpls;
   }
 
   private final Board board;
@@ -70,7 +84,7 @@ public final class GameMaster {
     winner = lastPlayerToMove;
   }
 
-  public Player winner() {
+  public Player getWinner() {
     checkState(winner != null, "Game not yet played");
     return winner;
   }
