@@ -9,11 +9,13 @@ import sublimedisruptors.quoridor.move.Move;
 /** A participant in a game of quoridor capable of deciding on its next move. */
 public interface QuoridorPlayer {
 
-  /**
-   * Informs this player that subsequent calls to {@link #getMove} will be in the context of a game
-   * with the given {@code settings} and that this player will be acting as {@code me}.
-   */
-  void setUp(QuoridorSettings settings, Player me);
+  interface Factory {
+    /**
+     * Creates a {@link QuoridorPlayer} prepared to participate as {@code self} in a game with the
+     * given {@code settings}.
+     */
+    QuoridorPlayer createPlayer(Player self, QuoridorSettings settings);
+  }
 
   /**
    * Returns the {@link Move} that this player wishes to make.
