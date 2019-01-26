@@ -11,3 +11,9 @@ java_library(
         "//java/sublimedisruptors/quoridor/player",
     ],
 )
+
+java_binary(
+    name = "PlayGame",
+    main_class = "sublimedisruptors.quoridor.game.QuoridorGameMain",
+    runtime_deps = [":game"],
+)
