@@ -46,6 +46,23 @@ public final class GameMasterTest {
   }
 
   @Test
+  public void playerRequestsIllegalMove_throws() {
+    QuoridorPlayer illegalMovePlayer =
+        (board, validPawnMoves) -> Move.pawnMove(Player.PLAYER1, Square.at('z', -1));
+    GameMaster gameMaster =
+        GameMaster.setUpGame(
+            QuoridorSettings.defaultTwoPlayer(),
+            ImmutableMap.of(
+                Player.PLAYER1,
+                (self, settings) -> illegalMovePlayer,
+                Player.PLAYER2,
+                SmartPlayer.FACTORY));
+    assertThrows(gameMaster::playGame);
+    assertThrows(gameMaster::getWinner);
+    assertThrows(gameMaster::playGame);
+  }
+
+  @Test
   public void getWinnerBeforePlayingGame_throws() {
     GameMaster gameMaster =
         GameMaster.setUpGame(

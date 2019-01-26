@@ -17,8 +17,18 @@ import sublimedisruptors.quoridor.move.Move;
 import sublimedisruptors.quoridor.move.RulesGovernor;
 import sublimedisruptors.quoridor.player.QuoridorPlayer;
 
+/** Plays a game of Quoridor. */
 public final class GameMaster {
 
+  /**
+   * Creates a {@code GameMaster}.
+   *
+   * <p>The game master is designed to play a single game. A new instance should be constructed for
+   * each new game, even if the {@code settings} and {@code playerFactories} do not change.
+   *
+   * <p>{@code playerFactories} must contain an entry for each player in {@link
+   * QuoridorSettings#players}.
+   */
   public static GameMaster setUpGame(
       QuoridorSettings settings, Map<Player, QuoridorPlayer.Factory> playerFactories) {
     Board board = Board.createFromSettings(settings);
@@ -47,6 +57,7 @@ public final class GameMaster {
   private final RulesGovernor governor;
   private final Iterator<Player> players;
   private final Map<Player, QuoridorPlayer> playerImpls;
+  private boolean played = false;
   private Player winner = null;
 
   private GameMaster(
@@ -60,22 +71,31 @@ public final class GameMaster {
     this.playerImpls = playerImpls;
   }
 
+  /**
+   * Plays the game.
+   *
+   * <p>It is an error to call this method twice on the same {@code GameMaster} instance.
+   *
+   * <p>If any player requests an illegal move, this method throws {@link IllegalMoveException} and
+   * there will be no winner.
+   */
   public void playGame() {
-    checkState(winner == null, "Game already played");
+    checkState(!played, "Game already played");
+    played = true;
     Player lastPlayerToMove = null;
     Square lastPawnMove = null;
     while (!gameOver(lastPlayerToMove, lastPawnMove)) {
       Player player = players.next();
       ImmutableSet<Move> validPawnMoves = governor.generateValidPawnMoves(player);
       Move move = playerImpls.get(player).getMove(board.snapshot(), validPawnMoves);
-      checkLegalMove(move, mv -> mv.player() == player);
+      checkLegalMove(move, mv -> mv.player() == player, player);
       if (move.type() == Move.Type.PAWN) {
-        checkLegalMove(move, validPawnMoves::contains);
+        checkLegalMove(move, validPawnMoves::contains, player);
         Square destination = move.destination();
         board.movePawn(player, destination);
         lastPawnMove = destination;
       } else {
-        checkLegalMove(move, governor::isValidWallMove);
+        checkLegalMove(move, governor::isValidWallMove, player);
         board.placeWall(move.wall(), player);
         lastPawnMove = null;
       }
@@ -84,8 +104,13 @@ public final class GameMaster {
     winner = lastPlayerToMove;
   }
 
+  /**
+   * Returns the winner of this game.
+   *
+   * <p>This method must only be called after {@link #playGame}.
+   */
   public Player getWinner() {
-    checkState(winner != null, "Game not yet played");
+    checkState(played && winner != null, "Game not played to completion");
     return winner;
   }
 
@@ -93,9 +118,9 @@ public final class GameMaster {
     return lastPawnMove != null && governor.isGoal(lastPlayerToMove, lastPawnMove);
   }
 
-  private static void checkLegalMove(Move move, Predicate<Move> predicate) {
+  private void checkLegalMove(Move move, Predicate<Move> predicate, Player player) {
     if (!predicate.test(move)) {
-      throw new IllegalArgumentException("Illegal move: " + move);
+      throw new IllegalMoveException(move, player, board.snapshot());
     }
   }
 }
